@@ -19,12 +19,12 @@
 .reports-user { color: #c8d7dc; font-size: 12px; margin: 8px 0 0; }
 .reports-exit { background: transparent; border: 1px solid #78909d; color: white; cursor: pointer; font: inherit; padding: 10px 16px; }
 .reports-exit span, .action-list span, .open-report span { color: var(--yellow); margin-left: 8px; }
-.reports-content { margin: 0 auto; max-width: 1120px; padding: 64px 24px 80px; }
+.reports-content { margin: 0 auto; max-width: 1120px; padding: 24px 24px 80px; }
 .reports-section-kicker { color: var(--blue); }
 .reports-intro h2 { font-size: clamp(30px, 5vw, 54px); letter-spacing: -2px; line-height: .98; margin: 14px 0 42px; max-width: 720px; }
-.profile-actions { border-bottom: 1px solid var(--line); border-top: 1px solid var(--line); display: grid; gap: 28px; grid-template-columns: repeat(3, 1fr); padding: 26px 0; }
+.profile-actions { display: flex; flex-wrap: wrap; gap: 12px; padding: 0; }
 .profile-group h3 { font-size: 13px; margin: 0 0 14px; }
-.action-list { display: flex; flex-direction: column; gap: 8px; }
+.action-list { display: flex; flex-wrap: wrap; gap: 12px; }
 .action-list button { background: white; border: 1px solid var(--line); color: var(--ink); cursor: pointer; font: inherit; font-size: 12px; padding: 12px 13px; text-align: left; transition: border-color .2s, transform .2s; }
 .action-list button:hover { border-color: var(--blue); transform: translateX(3px); }
 .report-selector { background: white; border-top: 5px solid var(--yellow); box-shadow: 0 12px 28px rgba(16, 42, 67, .07); margin-top: 42px; max-width: 760px; padding: 30px; }
@@ -40,6 +40,6 @@
 @media (max-width: 760px) {
 	.reports-header { align-items: flex-start; padding: 22px 20px; }
 	.reports-content { padding: 44px 16px 60px; }
-	.profile-actions { grid-template-columns: 1fr; }
+	.profile-actions, .action-list { flex-direction: column; }
 	.report-selector { padding: 24px 20px; }
 }

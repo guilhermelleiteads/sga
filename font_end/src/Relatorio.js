@@ -54,15 +54,9 @@ function Relatorio() {
 					<h1>Painel de relatórios</h1>
 					<p className="reports-user">Perfil: {profileLabels[perfil]}</p>
 				</div>
-				<button className="reports-exit" type="button" onClick={() => navigate('/')}>Sair <span aria-hidden="true">↗</span></button>
-			</header>
-
-			<section className="reports-content" aria-labelledby="reports-title">
-				
 				<nav className="profile-actions" aria-label="Ações por perfil">
 					{visibleProfiles.map((profile) => (
 						<div className="profile-group" key={profile.profile}>
-							<h3>{profile.profile}</h3>
 							<div className="action-list">
 								{profile.actions.map((action) => (
 									<button type="button" key={action.path} onClick={() => navigate(action.path)}>{action.label} <span aria-hidden="true">↗</span></button>
@@ -71,7 +65,10 @@ function Relatorio() {
 						</div>
 					))}
 				</nav>
+				<button className="reports-exit" type="button" onClick={() => navigate('/')}>Sair <span aria-hidden="true">↗</span></button>
+			</header>
 
+			<section className="reports-content" aria-labelledby="reports-title">
 				<section className="report-selector" aria-labelledby="selector-title">
 					<label htmlFor="report-type" id="selector-title">Tipo de relatório</label>
 					<select id="report-type" value={selectedReport} onChange={(event) => setSelectedReport(event.target.value)}>
