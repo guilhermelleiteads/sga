@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Relatorio_de_alocacoes.css';
 import BotaoVoltar from './Botao_voltar';
 
@@ -32,8 +32,6 @@ function Relatorio_de_alocacoes() {
 
 		loadAllocations();
 	}, []);
-
-	const environmentCount = useMemo(() => new Set(allocations.map((allocation) => allocation.ambienteId || allocation.ambienteNome)).size, [allocations]);
 
 	return (
 		<main className="allocation-report">
