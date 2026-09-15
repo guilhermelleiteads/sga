@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Botao_voltar from './Botao_voltar';
+import BotaoVoltar from './Botao_voltar';
 import './Sujestão_manutenção.css';
 
 function Sujestão_manutenção() {
@@ -42,7 +42,7 @@ function Sujestão_manutenção() {
 
 	return (
 		<main className="maintenance-page">
-			<Botao_voltar />
+			<BotaoVoltar />
 			<header className="maintenance-header">
 				<div>
 					<p className="maintenance-kicker">CENTRAL DE OPERAÇÕES</p>

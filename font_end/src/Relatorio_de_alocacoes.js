@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './Relatorio_de_alocacoes.css';
-import Botao_voltar from './Botao_voltar';
+import BotaoVoltar from './Botao_voltar';
 
 function Relatorio_de_alocacoes() {
 	const [allocations, setAllocations] = useState([]);
@@ -26,7 +26,7 @@ function Relatorio_de_alocacoes() {
 
 	return (
 		<main className="allocation-report">
-			<Botao_voltar />
+			<BotaoVoltar />
 			<header className="allocation-report-header">
 				<div>
 					<p className="allocation-report-kicker">CAMPUS AIR / RELATÓRIOS</p>

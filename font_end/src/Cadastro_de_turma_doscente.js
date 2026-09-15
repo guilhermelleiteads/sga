@@ -1,4 +1,4 @@
-import Botao_voltar from './Botao_voltar';
+import BotaoVoltar from './Botao_voltar';
 import { useState } from 'react';
 import './Cadastro_de_turma_doscente.css';
 
@@ -93,7 +93,7 @@ function Cadastro_de_turma_doscente() {
 
 	return (
 		<main className="class-registration">
-			<Botao_voltar />
+			<BotaoVoltar />
 			<header className="registration-header">
 				<div>
 					<p className="registration-kicker">CENTRAL DE OPERAÇÕES / ACADÊMICO</p>

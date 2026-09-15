@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './Atribuição_de_aula.css';
-import Botao_voltar from './Botao_voltar';
+import BotaoVoltar from './Botao_voltar';
 
 function Atribuição_de_aula() {
 	const [formData, setFormData] = useState({ turma: '', materia: '', docente: '' });
@@ -79,7 +79,7 @@ function Atribuição_de_aula() {
 
 	return (
 		<main className="class-assignment">
-			<Botao_voltar />
+			<BotaoVoltar />
 			<header className="assignment-header">
 				<div>
 					<p className="assignment-kicker">CENTRAL DE OPERAÇÕES / ACADÊMICO</p>

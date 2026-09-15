@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './Alocação_de_ambiente.css';
-import Botao_voltar from './Botao_voltar';
+import BotaoVoltar from './Botao_voltar';
 
 function Alocação_de_ambiente() {
 	const schedulesByPeriod = {
@@ -72,7 +72,7 @@ function Alocação_de_ambiente() {
 
 	return (
 		<main className="environment-allocation">
-			<Botao_voltar />
+			<BotaoVoltar />
 			<header className="allocation-header">
 				<div>
 					<p className="allocation-kicker">CENTRAL DE OPERAÇÕES / ACADÊMICO</p>

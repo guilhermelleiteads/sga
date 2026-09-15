@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "buildCommand": "npm install --prefix font_end && npm run build --prefix font_end",
+  "outputDirectory": "font_end/build",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
