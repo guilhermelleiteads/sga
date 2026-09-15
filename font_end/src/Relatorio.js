@@ -3,8 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './Relatorio.css';
 
 const reportOptions = [
-	{ value: 'ambientes', label: 'Relatório de ambientes', description: 'Consulte solicitações, disponibilidade e utilização dos ambientes.' },
-	{ value: 'turmas', label: 'Relatório de turmas', description: 'Visualize turmas cadastradas, docentes e horários vinculados.' },
+	{ value: 'ambientes', label: 'Relatório de ambientes', description: 'Consulte a utilização dos ambientes por aula, dia e horário.', path: '/relatorio-ambientes' },
+	{ value: 'turmas', label: 'Relatório de turmas', description: 'Visualize turmas cadastradas, cursos, turnos e matérias.', path: '/relatorio-turmas' },
 	{ value: 'banco-sugestoes', label: 'Relatório de manutenção', description: 'Consulte todas as sugestões de manutenção enviadas.', path: '/sugestao-manutencao/dashboard' },
 	{ value: 'alocacoes', label: 'Relatório de alocações', description: 'Confira a distribuição de ambientes por turma.', path: '/relatorio-alocacoes' },
 ];
@@ -19,7 +19,7 @@ const profileActions = [
 		{ label: 'Cadastro de turma/docente', path: '/Cadastro_de_turma_doscente' },
 	] },
 	{ profile: 'Secretaria', actions: [
-		{ label: 'Cadastro de turma', path: '/Cadastro_de_turma_doscente' },
+		{ label: 'Cadastro de turma/docente', path: '/Cadastro_de_turma_doscente' },
 	] },
 	{ profile: 'Manutenção', actions: [
 		{ label: 'Direcionamento de manutenção', path: '/Direcionamento_de_manutenção' },

@@ -9,5 +9,27 @@
     "horario": "07:00 - 08:50",
     "flexivel": false,
     "criadoEm": "2026-09-15T17:39:19.706Z"
+  },
+  {
+    "id": "0d1c87c8-b05e-4efc-96c8-adde28f8922f",
+    "ambienteId": "3",
+    "ambienteNome": "AMB-C07 · Laboratório de Engenharia C07",
+    "aulaId": "3d565801-3e71-425b-8984-ee0963fb3669",
+    "aulaDescricao": "ENG 1C · Ergonomia e Segurança · Roberto Henrique Souza",
+    "diaSemana": "Terça-feira",
+    "periodo": "Manhã",
+    "horario": "07:00 - 08:50",
+    "criadoEm": "2026-09-15T19:07:51.651Z"
+  },
+  {
+    "id": "246cfc19-62a1-48b2-a390-663545b9ecb9",
+    "ambienteId": "3",
+    "ambienteNome": "AMB-C07 · Laboratório de Engenharia C07",
+    "aulaId": "638dc30c-fe81-44fe-9ab7-186ef535923a",
+    "aulaDescricao": "ADS 3A · Estrutura de Dados · Ana Paula Mendes",
+    "diaSemana": "Terça-feira",
+    "periodo": "Manhã",
+    "horario": "07:00 - 08:50",
+    "criadoEm": "2026-09-15T19:09:07.455Z"
   }
 ]

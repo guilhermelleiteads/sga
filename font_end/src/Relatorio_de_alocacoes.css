@@ -6,6 +6,7 @@
 .allocation-report-total { align-items: flex-end; display: flex; flex-direction: column; }
 .allocation-report-total strong { color: #f1c84b; font-size: 46px; line-height: 1; }
 .allocation-report-total span { color: #b9c9d0; font-size: 12px; margin-top: 7px; }
+.allocation-report-total small { color: #7aa8b7; font-size: 11px; margin-top: 4px; }
 .allocation-report-content { margin: 66px auto 0; max-width: 1180px; padding: 0 24px; }
 .allocation-report-heading { border-bottom: 2px solid var(--report-ink); padding-bottom: 18px; }
 .allocation-report-heading h2 { font-size: clamp(26px, 4vw, 42px); letter-spacing: -1.5px; margin: 10px 0 0; }

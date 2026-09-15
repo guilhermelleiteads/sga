@@ -1,6 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import './Relatorio_de_alocacoes.css';
 import BotaoVoltar from './Botao_voltar';
+
+async function readAllocationsResponse(response) {
+	const responseText = await response.text();
+	try {
+		return JSON.parse(responseText);
+	} catch {
+		throw new Error(response.ok ? 'A API retornou uma resposta inválida.' : 'Não foi possível conectar à API. Inicie o backend e tente novamente.');
+	}
+}
 
 function Relatorio_de_alocacoes() {
 	const [allocations, setAllocations] = useState([]);
@@ -11,9 +20,9 @@ function Relatorio_de_alocacoes() {
 		async function loadAllocations() {
 			try {
 				const response = await fetch('/api/utilizacao');
-				const result = await response.json();
+				const result = await readAllocationsResponse(response);
 				if (!response.ok) throw new Error(result.erro || 'Não foi possível carregar as utilizações.');
-				setAllocations(result);
+				setAllocations(Array.isArray(result) ? result : []);
 			} catch (loadError) {
 				setError(loadError.message);
 			} finally {
@@ -24,6 +33,8 @@ function Relatorio_de_alocacoes() {
 		loadAllocations();
 	}, []);
 
+	const environmentCount = useMemo(() => new Set(allocations.map((allocation) => allocation.ambienteId || allocation.ambienteNome)).size, [allocations]);
+
 	return (
 		<main className="allocation-report">
 			<BotaoVoltar />
@@ -33,7 +44,6 @@ function Relatorio_de_alocacoes() {
 					<h1>Relatório de alocações</h1>
 					<p>Consulte a utilização dos ambientes por aula e horário.</p>
 				</div>
-				<div className="allocation-report-total"><strong>{allocations.length}</strong><span>utilizações</span></div>
 			</header>
 
 			<section className="allocation-report-content" aria-labelledby="allocation-report-title">

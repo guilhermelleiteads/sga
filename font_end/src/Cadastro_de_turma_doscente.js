@@ -2,6 +2,15 @@ import BotaoVoltar from './Botao_voltar';
 import { useState } from 'react';
 import './Cadastro_de_turma_doscente.css';
 
+async function readResponse(response) {
+	const responseText = await response.text();
+	try {
+		return JSON.parse(responseText);
+	} catch {
+		throw new Error(response.ok ? 'A API retornou uma resposta inválida.' : 'Não foi possível conectar à API. Inicie o backend e tente novamente.');
+	}
+}
+
 function Cadastro_de_turma_doscente() {
 	const [formData, setFormData] = useState({ codigo: '', nome: '', curso: '', turno: '', materias: [''] });
 	const [teacherData, setTeacherData] = useState({ registro: '', nome: '', area: '' });
@@ -58,7 +67,7 @@ function Cadastro_de_turma_doscente() {
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(formData),
 			});
-			const result = await response.json();
+			const result = await readResponse(response);
 			if (!response.ok) throw new Error(result.erro || 'Não foi possível criar a turma.');
 			setMessage('Turma criada com sucesso.');
 			setFormData({ codigo: '', nome: '', curso: '', turno: '', materias: [''] });
@@ -80,7 +89,7 @@ function Cadastro_de_turma_doscente() {
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(teacherData),
 			});
-			const result = await response.json();
+			const result = await readResponse(response);
 			if (!response.ok) throw new Error(result.erro || 'Não foi possível cadastrar o docente.');
 			setTeacherMessage('Docente cadastrado com sucesso.');
 			setTeacherData({ registro: '', nome: '', area: '' });

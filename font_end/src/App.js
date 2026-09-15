@@ -12,6 +12,8 @@ import CadastroDeTurma from './Cadastro_de_turma_doscente';
 import AtribuicaoDeAula from './Atribuição_de_aula';
 import AlocacaoDeAmbiente from './Alocação_de_ambiente';
 import RelatorioDeAlocacoes from './Relatorio_de_alocacoes';
+import RelatorioDeAmbientes from './Relatorio_de_ambientes';
+import RelatorioDeTurmas from './Relatorio_de_turmas';
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
         <Route path="/Atribuição_de_turma" element={<AtribuicaoDeAula />} />
         <Route path="/Alocação_de_ambiente" element={<AlocacaoDeAmbiente />} />
         <Route path="/relatorio-alocacoes" element={<RelatorioDeAlocacoes />} />
+        <Route path="/relatorio-ambientes" element={<RelatorioDeAmbientes />} />
+        <Route path="/relatorio-turmas" element={<RelatorioDeTurmas />} />
       </Routes>
     </Router>
   );

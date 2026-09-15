@@ -1,32 +1,38 @@
 [
-	{
-		"id": 1,
-		"registro": "DOC-001",
-		"nome": "Ana Paula Mendes",
-		"area": "Tecnologia da Informação"
-	},
-	{
-		"id": 2,
-		"registro": "DOC-002",
-		"nome": "Carlos Eduardo Lima",
-		"area": "Administração e Gestão"
-	},
-	{
-		"id": 3,
-		"registro": "DOC-003",
-		"nome": "Fernanda Alves",
-		"area": "Engenharia e Produção"
-	},
-	{
-		"id": 4,
-		"registro": "DOC-004",
-		"nome": "Juliana Martins",
-		"area": "Educação e Pedagogia"
-	},
-	{
-		"id": 5,
-		"registro": "DOC-005",
-		"nome": "Roberto Henrique Souza",
-		"area": "Matemática e Física"
-	}
+  {
+    "id": 1,
+    "registro": "DOC-001",
+    "nome": "Ana Paula Mendes",
+    "area": "Tecnologia da Informação"
+  },
+  {
+    "id": 2,
+    "registro": "DOC-002",
+    "nome": "Carlos Eduardo Lima",
+    "area": "Administração e Gestão"
+  },
+  {
+    "id": 3,
+    "registro": "DOC-003",
+    "nome": "Fernanda Alves",
+    "area": "Engenharia e Produção"
+  },
+  {
+    "id": 4,
+    "registro": "DOC-004",
+    "nome": "Juliana Martins",
+    "area": "Educação e Pedagogia"
+  },
+  {
+    "id": 5,
+    "registro": "DOC-005",
+    "nome": "Roberto Henrique Souza",
+    "area": "Matemática e Física"
+  },
+  {
+    "id": 6,
+    "registro": "sn123",
+    "nome": "Guilherme eu",
+    "area": "Ferramentaria"
+  }
 ]
