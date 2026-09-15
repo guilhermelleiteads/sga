@@ -1,0 +1,53 @@
+.login-page {
+	--ink: #102a43;
+	--muted: #6d7f91;
+	--paper: #f4f6f2;
+	--line: #d4ddd9;
+	--blue: #176b87;
+	--yellow: #f1c84b;
+	align-items: center;
+	background: var(--paper);
+	background-image: repeating-linear-gradient(135deg, rgba(23, 107, 135, .035) 0 1px, transparent 1px 12px);
+	color: var(--ink);
+	display: flex;
+	font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+	justify-content: center;
+	min-height: 100vh;
+	padding: 32px 20px;
+}
+
+.login-panel {
+	background: white;
+	border-top: 5px solid var(--yellow);
+	box-shadow: 0 14px 34px rgba(16, 42, 67, .1);
+	max-width: 520px;
+	padding: clamp(30px, 6vw, 58px);
+	width: 100%;
+}
+
+.login-kicker {
+	color: var(--blue);
+	font-size: 10px;
+	font-weight: 700;
+	letter-spacing: 2px;
+	margin: 0;
+}
+
+.login-heading h1 { font-size: clamp(30px, 5vw, 46px); letter-spacing: -1.5px; line-height: 1; margin: 14px 0 12px; }
+.login-heading p:last-child { color: var(--muted); line-height: 1.6; margin: 0; }
+.login-form { margin-top: 40px; }
+.login-form label { color: var(--ink); display: block; font-size: 13px; font-weight: 700; margin-bottom: 22px; }
+.login-form input { background: #fbfcfa; border: 1px solid var(--line); box-sizing: border-box; color: var(--ink); display: block; font: inherit; font-size: 15px; font-weight: 400; margin-top: 9px; outline: none; padding: 14px 15px; width: 100%; }
+.login-form input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(23, 107, 135, .12); }
+.login-footer { align-items: center; display: flex; justify-content: flex-end; margin-top: 32px; min-height: 48px; }
+.login-success { color: #328263; font-size: 13px; margin: 0 auto 0 0; }
+.login-submit { background: var(--blue); border: 0; color: white; cursor: pointer; font: inherit; font-weight: 700; padding: 15px 24px; transition: background .2s, transform .2s; }
+.login-submit:hover { background: #0e526b; transform: translateY(-2px); }
+.login-submit span { color: var(--yellow); font-size: 18px; margin-left: 12px; }
+
+@media (max-width: 520px) {
+	.login-panel { padding: 30px 22px; }
+	.login-footer { align-items: stretch; flex-direction: column; gap: 18px; }
+	.login-success { margin: 0; }
+	.login-submit { align-self: flex-end; }
+}

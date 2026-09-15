@@ -1,0 +1,83 @@
+.airport-dashboard {
+	--ink: #102a43;
+	--muted: #6d7f91;
+	--paper: #f4f6f2;
+	--yellow: #f1c84b;
+	--blue: #176b87;
+	background: var(--paper);
+	color: var(--ink);
+	font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+	min-height: 100vh;
+	position: relative;
+	overflow: hidden;
+}
+
+.airport-dashboard::before {
+	background: repeating-linear-gradient(135deg, rgba(23, 107, 135, .04) 0 1px, transparent 1px 12px);
+	content: '';
+	inset: 0;
+	pointer-events: none;
+	position: absolute;
+}
+
+.airport-header {
+	align-items: center;
+	background: var(--ink);
+	color: white;
+	display: flex;
+	justify-content: space-between;
+	padding: 22px clamp(24px, 6vw, 92px);
+	position: relative;
+}
+
+.brand-lockup { align-items: center; display: flex; gap: 14px; }
+.brand-mark { color: var(--yellow); font-size: 30px; transform: rotate(-35deg); }
+.eyebrow, .section-kicker { font-size: 10px; font-weight: 700; letter-spacing: 2px; margin: 0; }
+.eyebrow { color: #a8bbc5; }
+.brand-lockup h1 { font-size: 25px; letter-spacing: 1px; margin: 3px 0 0; }
+.login-button { align-items: center; background: transparent; border: 1px solid #78909d; color: white; cursor: pointer; display: flex; font: inherit; gap: 9px; padding: 10px 18px; transition: background .2s, border-color .2s; }
+.login-button:hover { background: var(--blue); border-color: var(--blue); }
+.login-button span { color: var(--yellow); font-size: 12px; }
+
+.dashboard-content { margin: 0 auto; max-width: 1120px; padding: 74px 24px 180px; position: relative; }
+.section-kicker { color: var(--blue); }
+.welcome-copy h2 { font-size: clamp(34px, 5vw, 64px); letter-spacing: -2px; line-height: .95; margin: 14px 0 12px; }
+.intro-text { color: var(--muted); font-size: 17px; margin: 0; }
+.status-strip { border-bottom: 1px solid #d4ddd9; border-top: 1px solid #d4ddd9; display: flex; gap: clamp(28px, 9vw, 130px); margin: 54px 0 28px; padding: 18px 0; }
+.status-strip div { display: flex; flex-direction: column; gap: 3px; }
+.status-strip strong { font-size: 29px; }
+.status-strip span { color: var(--muted); font-size: 12px; text-transform: uppercase; }
+.flight-board { background: white; border-top: 5px solid var(--yellow); box-shadow: 0 12px 28px rgba(16, 42, 67, .07); }
+.board-heading, .flight-row { align-items: center; display: grid; grid-template-columns: 1fr 2.4fr 1.2fr 1.1fr; gap: 18px; padding: 18px 24px; }
+.board-heading { background: #eaf0ed; color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: 1.4px; }
+.flight-row { border-bottom: 1px solid #e4e9e6; min-height: 68px; }
+.flight-row:last-child { border: 0; }
+.active-row { background: #fffbed; }
+.flight-row strong { font-size: 22px; }
+.flight-row b, .flight-row small { display: block; }
+.flight-row b { font-size: 15px; }
+.flight-row small { color: var(--muted); font-size: 12px; margin-top: 4px; }
+.gate { color: var(--blue); font-size: 12px; font-weight: 700; }
+.status { font-size: 10px; font-weight: 700; letter-spacing: .8px; }
+.boarding { color: #bd8510; }
+.on-time { color: #328263; }
+.maintenance-button { align-items: center; background: var(--blue); border: 0; bottom: 26px; box-shadow: 0 10px 24px rgba(23, 107, 135, .25); color: white; cursor: pointer; display: flex; gap: 13px; padding: 15px 20px; position: absolute; right: clamp(20px, 5vw, 76px); text-align: left; transition: transform .2s, background .2s; }
+.maintenance-button:hover { background: #0e526b; transform: translateY(-3px); }
+.wrench-icon { align-items: center; border: 1px solid rgba(255,255,255,.5); border-radius: 50%; display: flex; font-size: 21px; height: 34px; justify-content: center; transform: rotate(-40deg); width: 34px; }
+.maintenance-button strong, .maintenance-button small { display: block; }
+.maintenance-button strong { font-size: 13px; }
+.maintenance-button small { color: #c8e0e7; font-size: 11px; margin-top: 3px; }
+.arrow { color: var(--yellow); font-size: 22px; margin-left: 10px; }
+
+@media (max-width: 700px) {
+	.airport-header { align-items: flex-start; padding: 18px 20px; }
+	.login-button { padding: 9px 12px; }
+	.dashboard-content { padding: 52px 16px 180px; }
+	.status-strip { gap: 18px; justify-content: space-between; }
+	.status-strip strong { font-size: 23px; }
+	.status-strip span { font-size: 9px; }
+	.board-heading, .flight-row { gap: 8px; grid-template-columns: .7fr 1.6fr 1fr; padding: 14px 12px; }
+	.board-heading span:last-child, .flight-row .status { display: none; }
+	.gate { font-size: 10px; }
+	.maintenance-button { left: 16px; right: 16px; }
+}
