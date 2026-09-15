@@ -9,8 +9,9 @@ import Relatorio from './Relatorio';
 import DirecionamentoManutencao from './Direcionamento_de_manutenção';
 import SolicitacaoDeAmbiente from './Solicitação_de_Ambiente';
 import CadastroDeTurma from './Cadastro_de_turma_doscente';
-import AtribuicaoDeTurma from './Atribuição_de_turma';
+import AtribuicaoDeAula from './Atribuição_de_aula';
 import AlocacaoDeAmbiente from './Alocação_de_ambiente';
+import RelatorioDeAlocacoes from './Relatorio_de_alocacoes';
 
 function App() {
   return (
@@ -26,8 +27,9 @@ function App() {
         <Route path="/Direcionamento_de_manutenção" element={<DirecionamentoManutencao />} />
         <Route path="/Solicitação_de_Ambiente" element={<SolicitacaoDeAmbiente />} />
         <Route path="/Cadastro_de_turma_doscente" element={<CadastroDeTurma />} />
-        <Route path="/Atribuição_de_turma" element={<AtribuicaoDeTurma />} />
+        <Route path="/Atribuição_de_turma" element={<AtribuicaoDeAula />} />
         <Route path="/Alocação_de_ambiente" element={<AlocacaoDeAmbiente />} />
+        <Route path="/relatorio-alocacoes" element={<RelatorioDeAlocacoes />} />
       </Routes>
     </Router>
   );

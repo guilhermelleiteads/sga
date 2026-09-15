@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Botao_voltar from './Botao_voltar';
 import './Sujestão_manutenção.css';
 
 function Sujestão_manutenção() {
@@ -41,12 +42,12 @@ function Sujestão_manutenção() {
 
 	return (
 		<main className="maintenance-page">
+			<Botao_voltar />
 			<header className="maintenance-header">
 				<div>
 					<p className="maintenance-kicker">CENTRAL DE OPERAÇÕES</p>
 					<h1>Sugestão de manutenção</h1>
 				</div>
-				<span className="maintenance-code" aria-hidden="true">MNT / 01</span>
 			</header>
 
 			<section className="maintenance-panel" aria-labelledby="maintenance-title">

@@ -1,0 +1,21 @@
+.shared-back-button {
+	background: var(--back-button-background, #102a43);
+	border: 1px solid var(--back-button-border, #78909d);
+	color: var(--back-button-color, white);
+	cursor: pointer;
+	font: inherit;
+	padding: 10px 16px;
+	position: fixed;
+	right: 24px;
+	top: 20px;
+	z-index: 10;
+}
+
+.shared-back-button:hover {
+	background: #176b87;
+	border-color: #176b87;
+}
+
+@media (max-width: 600px) {
+	.shared-back-button { right: 16px; top: 16px; }
+}

@@ -6,17 +6,17 @@ const reportOptions = [
 	{ value: 'ambientes', label: 'Relatório de ambientes', description: 'Consulte solicitações, disponibilidade e utilização dos ambientes.' },
 	{ value: 'turmas', label: 'Relatório de turmas', description: 'Visualize turmas cadastradas, docentes e horários vinculados.' },
 	{ value: 'banco-sugestoes', label: 'Relatório de manutenção', description: 'Consulte todas as sugestões de manutenção enviadas.', path: '/sugestao-manutencao/dashboard' },
-	{ value: 'alocacoes', label: 'Relatório de alocações', description: 'Confira a distribuição de ambientes por turma.' },
+	{ value: 'alocacoes', label: 'Relatório de alocações', description: 'Confira a distribuição de ambientes por turma.', path: '/relatorio-alocacoes' },
 ];
 
 const profileActions = [
 	{ profile: 'Docente', actions: [
 		{ label: 'Solicitação de ambiente', path: '/Solicitação_de_Ambiente' },
 	] },
-	{ profile: 'Coordenador', actions: [
+		{ profile: 'Coordenador', actions: [
 		{ label: 'Alocação de ambiente', path: '/Alocação_de_ambiente' },
-		{ label: 'Alocação de turma', path: '/Atribuição_de_turma' },
-		{ label: 'Cadastro de turma', path: '/Cadastro_de_turma_doscente' },
+		{ label: 'Atribuição de aula', path: '/Atribuição_de_turma' },
+		{ label: 'Cadastro de turma/docente', path: '/Cadastro_de_turma_doscente' },
 	] },
 	{ profile: 'Secretaria', actions: [
 		{ label: 'Cadastro de turma', path: '/Cadastro_de_turma_doscente' },

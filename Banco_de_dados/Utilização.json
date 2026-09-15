@@ -1,0 +1,13 @@
+[
+  {
+    "id": "8136f740-3236-4a8c-8162-722b6261fc9f",
+    "ambienteId": "1",
+    "ambienteNome": "AMB-A12 · Laboratório de Informática A12",
+    "aulaId": "638dc30c-fe81-44fe-9ab7-186ef535923a",
+    "aulaDescricao": "ADS 3A · Estrutura de Dados · Ana Paula Mendes",
+    "diaSemana": "Terça-feira",
+    "horario": "07:00 - 08:50",
+    "flexivel": false,
+    "criadoEm": "2026-09-15T17:39:19.706Z"
+  }
+]

@@ -1,0 +1,19 @@
+.allocation-report { --report-ink: #102a43; --report-muted: #6d7f91; --report-paper: #f4f6f2; --report-line: #d4ddd9; --report-blue: #176b87; background: var(--report-paper); color: var(--report-ink); font-family: 'Trebuchet MS', 'Segoe UI', sans-serif; min-height: 100vh; padding-bottom: 70px; }
+.allocation-report-header { align-items: center; background: var(--report-ink); color: white; display: flex; justify-content: space-between; padding: 36px clamp(24px, 8vw, 120px); }
+.allocation-report-header h1 { font-size: clamp(30px, 5vw, 54px); letter-spacing: -2px; margin: 10px 0 8px; }
+.allocation-report-header p:last-child { color: #b9c9d0; margin: 0; }
+.allocation-report-kicker { color: #7aa8b7; font-size: 10px; font-weight: 700; letter-spacing: 2px; margin: 0; }
+.allocation-report-total { align-items: flex-end; display: flex; flex-direction: column; }
+.allocation-report-total strong { color: #f1c84b; font-size: 46px; line-height: 1; }
+.allocation-report-total span { color: #b9c9d0; font-size: 12px; margin-top: 7px; }
+.allocation-report-content { margin: 66px auto 0; max-width: 1180px; padding: 0 24px; }
+.allocation-report-heading { border-bottom: 2px solid var(--report-ink); padding-bottom: 18px; }
+.allocation-report-heading h2 { font-size: clamp(26px, 4vw, 42px); letter-spacing: -1.5px; margin: 10px 0 0; }
+.allocation-table-wrapper { overflow-x: auto; }
+.allocation-table { background: white; border-collapse: collapse; box-shadow: 0 12px 28px rgba(16, 42, 67, .07); margin-top: 28px; min-width: 760px; width: 100%; }
+.allocation-table th { background: #eaf0ed; color: var(--report-muted); font-size: 10px; letter-spacing: 1px; text-align: left; text-transform: uppercase; }
+.allocation-table th, .allocation-table td { border-bottom: 1px solid var(--report-line); padding: 16px; }
+.allocation-table td { font-size: 13px; }
+.allocation-report-message { color: var(--report-muted); padding: 36px 0; }
+.allocation-report-error { color: #a44343; }
+@media (max-width: 600px) { .allocation-report-header { align-items: flex-start; gap: 24px; padding: 28px 20px; } .allocation-report-content { margin-top: 42px; padding: 0 20px; } }

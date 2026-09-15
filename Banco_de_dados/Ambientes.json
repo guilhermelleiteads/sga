@@ -1,0 +1,42 @@
+[
+	{
+		"id": 1,
+		"codigo": "AMB-A12",
+		"nome": "Laboratório de Informática A12",
+		"tipo": "Laboratório",
+		"capacidade": 35,
+		"status": "Disponível"
+	},
+	{
+		"id": 2,
+		"codigo": "AMB-B04",
+		"nome": "Sala de aula B04",
+		"tipo": "Sala de aula",
+		"capacidade": 40,
+		"status": "Disponível"
+	},
+	{
+		"id": 3,
+		"codigo": "AMB-C07",
+		"nome": "Laboratório de Engenharia C07",
+		"tipo": "Laboratório",
+		"capacidade": 28,
+		"status": "Em manutenção"
+	},
+	{
+		"id": 4,
+		"codigo": "AUD-01",
+		"nome": "Auditório Principal",
+		"tipo": "Auditório",
+		"capacidade": 180,
+		"status": "Disponível"
+	},
+	{
+		"id": 5,
+		"codigo": "BIB-02",
+		"nome": "Sala de estudos da Biblioteca",
+		"tipo": "Sala de estudos",
+		"capacidade": 24,
+		"status": "Reservado"
+	}
+]

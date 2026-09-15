@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import './Direcionamento_de_manutenção.css';
+import Botao_voltar from './Botao_voltar';
 
 function formatDate(value) {
 	return new Intl.DateTimeFormat('pt-BR', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value));
@@ -59,6 +60,7 @@ function Direcionamento_de_manutenção() {
 
 	return (
 		<main className="maintenance-routing">
+			<Botao_voltar />
 			<header className="routing-header">
 				<div>
 					<p className="routing-kicker">CENTRAL DE OPERAÇÕES / MANUTENÇÃO</p>

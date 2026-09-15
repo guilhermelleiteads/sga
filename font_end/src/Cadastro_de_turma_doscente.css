@@ -1,0 +1,66 @@
+.class-registration {
+	--registration-ink: #102a43;
+	--registration-muted: #6d7f91;
+	--registration-paper: #f4f6f2;
+	--registration-line: #d4ddd9;
+	--registration-blue: #176b87;
+	--registration-yellow: #f1c84b;
+	background: var(--registration-paper);
+	color: var(--registration-ink);
+	font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+	min-height: 100vh;
+	padding-bottom: 70px;
+}
+
+.registration-header { align-items: center; background: var(--registration-ink); color: white; display: flex; justify-content: space-between; padding: 36px clamp(24px, 8vw, 120px); }
+.registration-header h1 { font-size: clamp(30px, 5vw, 54px); letter-spacing: -2px; margin: 10px 0 8px; }
+.registration-header p:last-child { color: #b9c9d0; margin: 0; }
+.registration-kicker { color: #7aa8b7; font-size: 10px; font-weight: 700; letter-spacing: 2px; margin: 0; }
+.registration-code { color: var(--registration-yellow); font-size: 12px; letter-spacing: 1px; }
+.registration-layout { display: grid; gap: 34px; margin: 58px auto 0; max-width: 900px; padding: 0 24px 70px; }
+.registration-card { background: white; border: 1px solid var(--registration-line); border-top: 5px solid var(--registration-blue); box-shadow: 0 14px 34px rgba(16, 42, 67, .08); color: var(--registration-ink); padding: clamp(28px, 5vw, 42px); }
+.card-heading { align-items: flex-start; display: flex; justify-content: space-between; }
+.card-heading h2 { font-size: clamp(24px, 3vw, 32px); letter-spacing: -1px; margin: 10px 0 0; }
+.card-number { color: var(--registration-yellow); font-size: 32px; font-weight: 700; line-height: 1; }
+.card-description { color: var(--registration-muted); font-size: 14px; line-height: 1.5; margin: 18px 0 0; }
+.teacher-inline-form { display: grid; gap: 18px; grid-template-columns: repeat(2, 1fr); margin-top: 18px; }
+.teacher-inline-form label { color: var(--registration-ink); display: grid; font-size: 13px; font-weight: 700; gap: 9px; }
+.teacher-inline-form input { background: #fbfcfa; border: 1px solid var(--registration-line); box-sizing: border-box; color: var(--registration-ink); font: inherit; font-size: 14px; min-height: 48px; padding: 12px; width: 100%; }
+.teacher-inline-form input:focus { border-color: var(--registration-blue); outline: 3px solid rgba(23, 107, 135, .12); }
+.teacher-inline-form button { background: var(--registration-blue); border: 0; color: white; cursor: pointer; font: inherit; font-weight: 700; grid-column: 2; justify-self: end; min-height: 50px; padding: 0 22px; }
+.teacher-inline-form button:hover { background: #0e526b; }
+.teacher-inline-form button:disabled { cursor: wait; opacity: .7; }
+.registration-panel { background: white; border-top: 5px solid var(--registration-yellow); box-shadow: 0 14px 34px rgba(16, 42, 67, .08); padding: clamp(28px, 5vw, 58px); }
+.registration-panel h2 { font-size: clamp(26px, 4vw, 42px); letter-spacing: -1.5px; margin: 12px 0 10px; }
+.registration-intro > p:last-child { color: var(--registration-muted); line-height: 1.6; margin: 0; }
+.registration-kicker.blue { color: var(--registration-blue); }
+.registration-form { display: grid; gap: 18px; grid-template-columns: repeat(2, 1fr); margin-top: 42px; }
+.registration-form label { color: var(--registration-ink); display: grid; font-size: 13px; font-weight: 700; gap: 9px; }
+.registration-form input, .registration-form select { background: #fbfcfa; border: 1px solid var(--registration-line); box-sizing: border-box; color: var(--registration-ink); font: inherit; font-size: 14px; min-height: 48px; padding: 12px; width: 100%; }
+.registration-form input:focus, .registration-form select:focus { border-color: var(--registration-blue); outline: 3px solid rgba(23, 107, 135, .12); }
+.subjects-heading { border-bottom: 1px solid var(--registration-line); color: var(--registration-blue); font-size: 11px; grid-column: 1 / -1; letter-spacing: 1px; margin: 8px 0 0; padding-bottom: 10px; text-transform: uppercase; }
+.subjects-fields { display: grid; gap: 12px; grid-column: 1 / -1; }
+.subject-field { align-items: end; display: flex; gap: 10px; }
+.subject-field label { flex: 1; }
+.add-subject, .remove-subject { border: 1px solid var(--registration-line); cursor: pointer; font: inherit; font-size: 12px; padding: 10px 13px; }
+.add-subject { background: #eaf0ed; color: var(--registration-blue); grid-column: 1; justify-self: start; }
+.add-subject:hover { border-color: var(--registration-blue); }
+.add-subject:disabled { cursor: not-allowed; opacity: .55; }
+.remove-subject { background: white; color: #a44343; margin-bottom: 0; }
+.remove-subject:hover { border-color: #a44343; }
+.registration-button { background: var(--registration-blue); border: 0; color: white; cursor: pointer; font: inherit; font-weight: 700; grid-column: 2; min-height: 50px; padding: 0 22px; justify-self: end; }
+.registration-button:hover { background: #0e526b; }
+.registration-button:disabled { cursor: wait; opacity: .7; }
+.registration-success, .registration-error { font-size: 13px; margin: 20px 0 0; }
+.registration-success { color: #328263; }
+.registration-error { color: #a44343; }
+
+@media (max-width: 600px) {
+	.registration-header { align-items: flex-start; gap: 24px; padding: 28px 20px; }
+	.registration-layout { gap: 24px; margin-top: 36px; padding: 0 16px 50px; }
+	.registration-panel { padding: 28px 20px; }
+	.teacher-inline-form { grid-template-columns: 1fr; }
+	.teacher-inline-form button { grid-column: auto; justify-self: end; }
+	.registration-form { grid-template-columns: 1fr; }
+	.registration-button { grid-column: auto; justify-self: end; }
+}

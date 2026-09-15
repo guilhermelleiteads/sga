@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import './Relatorio_de_manutenção.css';
+import Botao_voltar from './Botao_voltar';
 
 function formatDate(value) {
 	return new Intl.DateTimeFormat('pt-BR', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value));
@@ -28,6 +29,7 @@ function RelatorioDeManutencao() {
 
 	return (
 		<main className="suggestions-database">
+			<Botao_voltar />
 			<header className="database-header">
 				<div>
 					<p className="database-kicker">CENTRAL DE OPERAÇÕES / MANUTENÇÃO</p>
