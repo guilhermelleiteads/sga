@@ -1,5 +1,96 @@
+import { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import './Relatorio.css';
+
+const reportOptions = [
+	{ value: 'ambientes', label: 'Relatório de ambientes', description: 'Consulte solicitações, disponibilidade e utilização dos ambientes.' },
+	{ value: 'turmas', label: 'Relatório de turmas', description: 'Visualize turmas cadastradas, docentes e horários vinculados.' },
+	{ value: 'manutencao', label: 'Relatório de manutenção', description: 'Acompanhe solicitações e encaminhamentos de manutenção.' },
+	{ value: 'alocacoes', label: 'Relatório de alocações', description: 'Confira a distribuição de ambientes por turma.' },
+];
+
+const profileActions = [
+	{ profile: 'Docente', actions: [
+		{ label: 'Solicitação de ambiente', path: '/Solicitação_de_Ambiente' },
+	] },
+	{ profile: 'Coordenador', actions: [
+		{ label: 'Alocação de ambiente', path: '/Alocação_de_ambiente' },
+		{ label: 'Alocação de turma', path: '/Atribuição_de_turma' },
+		{ label: 'Cadastro de turma', path: '/Cadastro_de_turma_doscente' },
+	] },
+	{ profile: 'Secretaria', actions: [
+		{ label: 'Cadastro de turma', path: '/Cadastro_de_turma_doscente' },
+	] },
+	{ profile: 'Manutenção', actions: [
+		{ label: 'Direcionamento de manutenção', path: '/Direcionamento_de_manutenção' },
+	] },
+];
+
+const profileLabels = {
+	docente: 'Docente',
+	coordenador: 'Coordenador',
+	secretaria: 'Secretaria',
+	manutencao: 'Manutenção',
+};
+
 function Relatorio() {
-	return <div>Relatório</div>;
+	const navigate = useNavigate();
+	const location = useLocation();
+	const [selectedReport, setSelectedReport] = useState(reportOptions[0].value);
+	const currentReport = reportOptions.find((report) => report.value === selectedReport);
+	const perfil = location.state?.perfil || 'docente';
+	const visibleProfiles = profileActions.filter((group) => {
+		if (perfil === 'docente') return group.profile === 'Docente';
+		if (perfil === 'coordenador') return group.profile === 'Coordenador';
+		if (perfil === 'secretaria') return group.profile === 'Secretaria';
+		return group.profile === 'Manutenção';
+	});
+
+	return (
+		<main className="reports-page">
+			<header className="reports-header">
+				<div>
+					<p className="reports-kicker">CAMPUS AIR · CENTRAL DE OPERAÇÕES</p>
+					<h1>Painel de relatórios</h1>
+					<p className="reports-user">Perfil: {profileLabels[perfil]}</p>
+				</div>
+				<button className="reports-exit" type="button" onClick={() => navigate('/')}>Sair <span aria-hidden="true">↗</span></button>
+			</header>
+
+			<section className="reports-content" aria-labelledby="reports-title">
+				<div className="reports-intro">
+					<p className="reports-section-kicker">ACESSOS POR PERFIL</p>
+					<h2 id="reports-title">Escolha uma operação ou consulte um relatório.</h2>
+				</div>
+
+				<nav className="profile-actions" aria-label="Ações por perfil">
+					{visibleProfiles.map((profile) => (
+						<div className="profile-group" key={profile.profile}>
+							<h3>{profile.profile}</h3>
+							<div className="action-list">
+								{profile.actions.map((action) => (
+									<button type="button" key={action.path} onClick={() => navigate(action.path)}>{action.label} <span aria-hidden="true">↗</span></button>
+								))}
+							</div>
+						</div>
+					))}
+				</nav>
+
+				<section className="report-selector" aria-labelledby="selector-title">
+					<label htmlFor="report-type" id="selector-title">Tipo de relatório</label>
+					<select id="report-type" value={selectedReport} onChange={(event) => setSelectedReport(event.target.value)}>
+						{reportOptions.map((report) => <option value={report.value} key={report.value}>{report.label}</option>)}
+					</select>
+					<div className="report-preview" aria-live="polite">
+						<p className="preview-label">RELATÓRIO SELECIONADO</p>
+						<h3>{currentReport.label}</h3>
+						<p>{currentReport.description}</p>
+						<button className="open-report" type="button">Abrir relatório <span aria-hidden="true">↗</span></button>
+					</div>
+				</section>
+			</section>
+		</main>
+	);
 }
 
 export default Relatorio;

@@ -40,6 +40,7 @@
 .login-form input { background: #fbfcfa; border: 1px solid var(--line); box-sizing: border-box; color: var(--ink); display: block; font: inherit; font-size: 15px; font-weight: 400; margin-top: 9px; outline: none; padding: 14px 15px; width: 100%; }
 .login-form input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(23, 107, 135, .12); }
 .login-footer { align-items: center; display: flex; justify-content: flex-end; margin-top: 32px; min-height: 48px; }
+.login-error { color: #b24b3e; font-size: 13px; margin: 0 auto 0 0; }
 .login-success { color: #328263; font-size: 13px; margin: 0 auto 0 0; }
 .login-submit { background: var(--blue); border: 0; color: white; cursor: pointer; font: inherit; font-weight: 700; padding: 15px 24px; transition: background .2s, transform .2s; }
 .login-submit:hover { background: #0e526b; transform: translateY(-2px); }

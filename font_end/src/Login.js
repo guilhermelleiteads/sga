@@ -1,19 +1,34 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
 function Login() {
+	const navigate = useNavigate();
 	const [formData, setFormData] = useState({ login: '', senha: '' });
-	const [submitted, setSubmitted] = useState(false);
+	const [error, setError] = useState('');
 
 	function handleChange(event) {
 		const { name, value } = event.target;
 		setFormData((currentData) => ({ ...currentData, [name]: value }));
-		setSubmitted(false);
+		setError('');
 	}
 
-	function handleSubmit(event) {
+	async function handleSubmit(event) {
 		event.preventDefault();
-		setSubmitted(true);
+		try {
+			const response = await fetch('/logins.json');
+			const users = await response.json();
+			const user = users.find((item) => item.login === formData.login && item.senha === formData.senha);
+
+			if (!user) {
+				setError('Login ou senha inválidos.');
+				return;
+			}
+
+			navigate('/Relatorio', { state: { perfil: user.perfil, login: user.login } });
+		} catch {
+			setError('Não foi possível validar o login. Tente novamente.');
+		}
 	}
 
 	return (
@@ -35,7 +50,7 @@ function Login() {
 						<input id="senha-login" name="senha" type="password" value={formData.senha} onChange={handleChange} required />
 					</label>
 					<div className="login-footer">
-						{submitted && <p className="login-success" role="status">Dados enviados com sucesso.</p>}
+						{error && <p className="login-error" role="alert">{error}</p>}
 						<button className="login-submit" type="submit">Logar <span aria-hidden="true">↗</span></button>
 					</div>
 				</form>
