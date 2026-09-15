@@ -8,16 +8,35 @@ function Sujestão_manutenção() {
 		sugestao: '',
 	});
 	const [submitted, setSubmitted] = useState(false);
+	const [sending, setSending] = useState(false);
+	const [error, setError] = useState('');
 
 	function handleChange(event) {
 		const { name, value } = event.target;
 		setFormData((currentData) => ({ ...currentData, [name]: value }));
 		setSubmitted(false);
+		setError('');
 	}
 
-	function handleSubmit(event) {
+	async function handleSubmit(event) {
 		event.preventDefault();
-		setSubmitted(true);
+		setSending(true);
+		setError('');
+		try {
+			const response = await fetch('/api/sugestoes', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(formData),
+			});
+			const result = await response.json();
+			if (!response.ok) throw new Error(result.erro || 'Não foi possível enviar a sugestão.');
+			setSubmitted(true);
+			setFormData({ nome: '', local: '', sugestao: '' });
+		} catch (submitError) {
+			setError(submitError.message);
+		} finally {
+			setSending(false);
+		}
 	}
 
 	return (
@@ -52,7 +71,8 @@ function Sujestão_manutenção() {
 					</label>
 					<div className="form-footer">
 						{submitted && <p className="success-message" role="status">Sugestão enviada com sucesso.</p>}
-						<button className="submit-button" type="submit">Enviar <span aria-hidden="true">↗</span></button>
+						{error && <p className="error-message" role="alert">{error}</p>}
+						<button className="submit-button" type="submit" disabled={sending}>{sending ? 'Enviando...' : 'Enviar'} <span aria-hidden="true">↗</span></button>
 					</div>
 				</form>
 			</section>

@@ -51,7 +51,9 @@
 .maintenance-form input::placeholder, .maintenance-form textarea::placeholder { color: #9aa7ae; }
 .form-footer { align-items: center; display: flex; justify-content: flex-end; margin-top: 32px; min-height: 48px; }
 .success-message { color: #328263; font-size: 13px; margin: 0 auto 0 0; }
+.error-message { color: #a44343; font-size: 13px; margin: 0 auto 0 0; }
 .submit-button { background: var(--blue); border: 0; color: white; cursor: pointer; font: inherit; font-weight: 700; padding: 15px 24px; transition: background .2s, transform .2s; }
+.submit-button:disabled { cursor: wait; opacity: .7; }
 .submit-button:hover { background: #0e526b; transform: translateY(-2px); }
 .submit-button span { color: var(--yellow); font-size: 18px; margin-left: 12px; }
 

@@ -8,10 +8,10 @@ function Home() {
 		<main className="airport-dashboard">
 			<header className="airport-header">
 				<div className="brand-lockup">
-					<span className="brand-mark" aria-hidden="true">✈</span>
+					<span className="brand-mark" aria-hidden="true">⊞</span>
 					<div>
-						<p className="eyebrow">SISTEMA DE GESTÃO ACADÊMICA</p>
-						<h1>Campus Air</h1>
+						<p className="eyebrow">SISTEMA DE GESTÃO DE AMBIENTES</p>
+						<h1>SENAI</h1>
 					</div>
 				</div>
 				<button className="login-button" type="button" onClick={() => navigate('/login')}>
@@ -22,15 +22,7 @@ function Home() {
 
 			<section className="dashboard-content" aria-labelledby="dashboard-title">
 				<div className="welcome-copy">
-					<p className="section-kicker">PAINEL DE OPERAÇÕES · TERMINAL 01</p>
-					<h2 id="dashboard-title">Próximas partidas</h2>
-					<p className="intro-text">Acompanhe a operação do campus em tempo real.</p>
-				</div>
-
-				<div className="status-strip" aria-label="Resumo da operação">
-					<div><strong>04</strong><span>voos programados</span></div>
-					<div><strong>02</strong><span>em embarque</span></div>
-					<div><strong>00</strong><span>atrasos ativos</span></div>
+					<p className="intro-text">Acompanhe Aulas em andamento</p><br></br>
 				</div>
 
 				<div className="flight-board" role="table" aria-label="Programação de ambientes">
@@ -49,7 +41,7 @@ function Home() {
 				</div>
 			</section>
 
-			<button className="maintenance-button" type="button" onClick={() => navigate('/sugestao-manutencao/dashboard')}>
+			<button className="maintenance-button" type="button" onClick={() => navigate('/sugestao-manutencao')}>
 				<span className="wrench-icon" aria-hidden="true">⌁</span>
 				<span><strong>Sugestão de manutenção</strong><small>Relate um problema no campus</small></span>
 				<span className="arrow" aria-hidden="true">↗</span>

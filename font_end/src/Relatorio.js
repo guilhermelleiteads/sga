@@ -5,7 +5,7 @@ import './Relatorio.css';
 const reportOptions = [
 	{ value: 'ambientes', label: 'Relatório de ambientes', description: 'Consulte solicitações, disponibilidade e utilização dos ambientes.' },
 	{ value: 'turmas', label: 'Relatório de turmas', description: 'Visualize turmas cadastradas, docentes e horários vinculados.' },
-	{ value: 'manutencao', label: 'Relatório de manutenção', description: 'Acompanhe solicitações e encaminhamentos de manutenção.' },
+	{ value: 'banco-sugestoes', label: 'Relatório de manutenção', description: 'Consulte todas as sugestões de manutenção enviadas.', path: '/sugestao-manutencao/dashboard' },
 	{ value: 'alocacoes', label: 'Relatório de alocações', description: 'Confira a distribuição de ambientes por turma.' },
 ];
 
@@ -58,11 +58,7 @@ function Relatorio() {
 			</header>
 
 			<section className="reports-content" aria-labelledby="reports-title">
-				<div className="reports-intro">
-					<p className="reports-section-kicker">ACESSOS POR PERFIL</p>
-					<h2 id="reports-title">Escolha uma operação ou consulte um relatório.</h2>
-				</div>
-
+				
 				<nav className="profile-actions" aria-label="Ações por perfil">
 					{visibleProfiles.map((profile) => (
 						<div className="profile-group" key={profile.profile}>
@@ -85,7 +81,7 @@ function Relatorio() {
 						<p className="preview-label">RELATÓRIO SELECIONADO</p>
 						<h3>{currentReport.label}</h3>
 						<p>{currentReport.description}</p>
-						<button className="open-report" type="button">Abrir relatório <span aria-hidden="true">↗</span></button>
+						<button className="open-report" type="button" onClick={() => currentReport.path && navigate(currentReport.path)} disabled={!currentReport.path}>Abrir relatório <span aria-hidden="true">↗</span></button>
 					</div>
 				</section>
 			</section>

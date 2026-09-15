@@ -1,0 +1,67 @@
+.maintenance-routing {
+	--routing-ink: #102a43;
+	--routing-muted: #6d7f91;
+	--routing-paper: #f4f6f2;
+	--routing-line: #d4ddd9;
+	--routing-blue: #176b87;
+	--routing-yellow: #f1c84b;
+	background: var(--routing-paper);
+	color: var(--routing-ink);
+	font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+	min-height: 100vh;
+	padding-bottom: 64px;
+}
+
+.routing-header {
+	align-items: center;
+	background: var(--routing-ink);
+	color: white;
+	display: flex;
+	justify-content: space-between;
+	padding: 36px clamp(24px, 8vw, 120px);
+}
+
+.routing-header h1 { font-size: clamp(30px, 5vw, 54px); letter-spacing: -2px; margin: 10px 0 8px; }
+.routing-header p:last-child { color: #b9c9d0; margin: 0; }
+.routing-kicker { color: #7aa8b7; font-size: 10px; font-weight: 700; letter-spacing: 2px; margin: 0; }
+.routing-total { align-items: flex-end; display: flex; flex-direction: column; }
+.routing-total strong { color: var(--routing-yellow); font-size: 46px; line-height: 1; }
+.routing-total span { color: #b9c9d0; font-size: 12px; margin-top: 7px; }
+.routing-list { margin: 66px auto 0; max-width: 1280px; padding: 0 24px; }
+.routing-list-heading { align-items: flex-end; border-bottom: 2px solid var(--routing-ink); display: flex; justify-content: space-between; padding-bottom: 18px; }
+.routing-list-heading h2 { font-size: clamp(26px, 4vw, 42px); letter-spacing: -1.5px; margin: 10px 0 0; }
+.routing-live { color: #328263; font-size: 10px; font-weight: 700; letter-spacing: 1px; }
+.routing-columns { display: grid; gap: 18px; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 28px; }
+.routing-column { background: #eaf0ed; border-top: 4px solid var(--routing-blue); min-width: 0; padding: 16px; }
+.routing-column:nth-child(2) { border-top-color: var(--routing-yellow); }
+.routing-column:nth-child(3) { border-top-color: #328263; }
+.routing-column-header { align-items: center; display: flex; justify-content: space-between; margin-bottom: 16px; }
+.routing-column-header h3 { font-size: 18px; margin: 0; }
+.routing-column-header strong { background: var(--routing-ink); border-radius: 50%; color: white; font-size: 12px; min-width: 26px; padding: 6px 0; text-align: center; }
+.routing-card { background: white; box-shadow: 0 5px 14px rgba(16, 42, 67, .07); margin-bottom: 14px; padding: 16px; }
+.routing-card:last-child { margin-bottom: 0; }
+.routing-card-meta { align-items: center; display: flex; justify-content: space-between; }
+.routing-id, .routing-card-meta time { color: var(--routing-muted); font-size: 11px; }
+.routing-id { font-weight: 700; }
+.routing-card h4 { font-size: 16px; line-height: 1.3; margin: 14px 0; }
+.routing-card p { color: var(--routing-muted); display: flex; font-size: 12px; gap: 10px; margin: 7px 0; }
+.routing-card p strong { color: var(--routing-ink); min-width: 76px; }
+.routing-update-form { border-top: 1px solid var(--routing-line); display: grid; gap: 10px; margin-top: 16px; padding-top: 14px; }
+.routing-update-form label { color: var(--routing-ink); display: grid; font-size: 11px; font-weight: 700; gap: 5px; }
+.routing-update-form select, .routing-update-form textarea { border: 1px solid var(--routing-line); box-sizing: border-box; color: var(--routing-ink); font: inherit; font-size: 12px; padding: 9px; width: 100%; }
+.routing-update-form textarea { resize: vertical; }
+.routing-update-form button { background: var(--routing-blue); border: 0; color: white; cursor: pointer; font: inherit; font-size: 12px; font-weight: 700; padding: 10px; }
+.routing-update-form button:disabled { cursor: wait; opacity: .65; }
+.empty-column { color: var(--routing-muted); font-size: 12px; padding: 18px 4px; text-align: center; }
+.routing-row-meta { display: flex; flex-direction: column; gap: 10px; }
+.routing-id { color: var(--routing-muted); }
+.routing-message { color: var(--routing-muted); padding: 36px 0; }
+.routing-error { color: #a44343; }
+
+@media (max-width: 600px) {
+	.routing-header { align-items: flex-start; gap: 28px; padding: 28px 20px; }
+	.routing-total strong { font-size: 34px; }
+	.routing-list { margin-top: 42px; padding: 0 20px; }
+	.routing-list-heading { align-items: flex-start; flex-direction: column; gap: 16px; }
+	.routing-columns { grid-template-columns: 1fr; }
+}

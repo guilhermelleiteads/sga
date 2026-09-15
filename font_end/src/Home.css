@@ -39,7 +39,7 @@
 .login-button:hover { background: var(--blue); border-color: var(--blue); }
 .login-button span { color: var(--yellow); font-size: 12px; }
 
-.dashboard-content { margin: 0 auto; max-width: 1120px; padding: 74px 24px 180px; position: relative; }
+.dashboard-content { margin: 0 auto; max-width: 1120px; padding: 24px 24px 180px; position: relative; }
 .section-kicker { color: var(--blue); }
 .welcome-copy h2 { font-size: clamp(34px, 5vw, 64px); letter-spacing: -2px; line-height: .95; margin: 14px 0 12px; }
 .intro-text { color: var(--muted); font-size: 17px; margin: 0; }

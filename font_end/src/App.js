@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Home from './Home';
 import SugestaoManutencao from './Sujestão_manutenção';
+import RelatorioDeManutencao from './Relatorio_de_manutenção';
 import Login from './Login';
 import Relatorio from './Relatorio';
 import DirecionamentoManutencao from './Direcionamento_de_manutenção';
@@ -16,7 +17,9 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/sugestao-manutencao" element={<SugestaoManutencao />} />
         <Route path="/sugestao-manutencao/:id" element={<SugestaoManutencao />} />
+        <Route path="/sugestao-manutencao/dashboard" element={<RelatorioDeManutencao />} />
     
         <Route path="/login" element={<Login/>} />
         <Route path="/Relatorio" element={<Relatorio/>} />
