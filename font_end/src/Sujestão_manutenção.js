@@ -45,7 +45,7 @@ function Sujestão_manutenção() {
 			<BotaoVoltar />
 			<header className="maintenance-header">
 				<div>
-					<p className="maintenance-kicker">CENTRAL DE OPERAÇÕES</p>
+					<p className="maintenance-kicker">CENTRAL DE SUGESTÕES</p>
 					<h1>Sugestão de manutenção</h1>
 				</div>
 			</header>

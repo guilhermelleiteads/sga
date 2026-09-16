@@ -50,7 +50,7 @@ function Relatorio() {
 		<main className="reports-page">
 			<header className="reports-header">
 				<div>
-					<p className="reports-kicker">CAMPUS AIR · CENTRAL DE OPERAÇÕES</p>
+					<p className="reports-kicker">SISTEMA DE GESTÃO DE AMBIENTES</p>
 					<h1>Painel de relatórios</h1>
 					<p className="reports-user">Perfil: {profileLabels[perfil]}</p>
 				</div>

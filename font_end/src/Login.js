@@ -35,7 +35,7 @@ function Login() {
 		<main className="login-page">
 			<section className="login-panel" aria-labelledby="login-title">
 				<div className="login-heading">
-					<p className="login-kicker">CAMPUS AIR · ACESSO</p>
+					<p className="login-kicker">SISTEMA DE GESTÃO DE AMBIENTES</p>
 					<h1 id="login-title">Entrar no painel</h1>
 					<p>Identifique-se para acessar as operações do campus.</p>
 				</div>
