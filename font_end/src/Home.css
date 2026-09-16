@@ -57,6 +57,8 @@
 .flight-row b, .flight-row small { display: block; }
 .flight-row b { font-size: 15px; }
 .flight-row small { color: var(--muted); font-size: 12px; margin-top: 4px; }
+.board-message { color: var(--muted); margin: 0; padding: 28px 24px; }
+.board-error { color: #a44343; }
 .gate { color: var(--blue); font-size: 12px; font-weight: 700; }
 .status { font-size: 10px; font-weight: 700; letter-spacing: .8px; }
 .boarding { color: #bd8510; }

@@ -1,0 +1,107 @@
+[
+  {
+    "periodo": "Manhã",
+    "nome": "M1-AA-SCHA",
+    "tipo": "Aprendizagem"
+  },
+  {
+    "periodo": "Manhã",
+    "nome": "M1AA",
+    "tipo": "Aprendizagem"
+  },
+  {
+    "periodo": "Tarde",
+    "nome": "T1-AA-SABESP",
+    "tipo": "Aprendizagem"
+  },
+  {
+    "periodo": "Tarde",
+    "nome": "T1AA-CORREIOS",
+    "tipo": "Aprendizagem"
+  },
+  {
+    "periodo": "Inexistente",
+    "nome": "T1AL-CORREIOS",
+    "tipo": "Aprendizagem"
+  },
+  {
+    "periodo": "Manhã",
+    "nome": "M1-ALP",
+    "tipo": "Aprendizagem"
+  },
+  {
+    "periodo": "Integral",
+    "nome": "I1CECDR",
+    "tipo": "Aprendizagem"
+  },
+  {
+    "periodo": "Manhã",
+    "nome": "M2COST-EMPHASIS",
+    "tipo": "Aprendizagem"
+  },
+  {
+    "periodo": "Tarde",
+    "nome": "T2COST-EMPHASIS",
+    "tipo": "Aprendizagem"
+  },
+  {
+    "periodo": "Manhã",
+    "nome": "M1EME",
+    "tipo": "Aprendizagem"
+  },
+  {
+    "periodo": "Manhã",
+    "nome": "M2EME",
+    "tipo": "Aprendizagem"
+  },
+  {
+    "periodo": "Tarde",
+    "nome": "T1EME",
+    "tipo": "Aprendizagem"
+  },
+  {
+    "periodo": "Tarde",
+    "nome": "T3EME",
+    "tipo": "Aprendizagem"
+  },
+  {
+    "periodo": "Tarde",
+    "nome": "T2-MBMC-SUZ",
+    "tipo": "Aprendizagem"
+  },
+  {
+    "periodo": "Integral",
+    "nome": "I1MUECDR C",
+    "tipo": "Aprendizagem"
+  },
+  {
+    "periodo": "Tarde",
+    "nome": "T1-OMPMI-SCHA",
+    "tipo": "Aprendizagem"
+  },
+  {
+    "periodo": "Tarde",
+    "nome": "T1-OMPMI-ZF",
+    "tipo": "Aprendizagem"
+  },
+  {
+    "periodo": "Manhã",
+    "nome": "M2-OPFM-SCHA",
+    "tipo": "Aprendizagem"
+  },
+  {
+    "periodo": "Tarde",
+    "nome": "T1-OPFM-SCHA",
+    "tipo": "Aprendizagem"
+  },
+  {
+    "periodo": "Tarde",
+    "nome": "T2-OPFM-SCHA",
+    "tipo": "Aprendizagem"
+  },
+  {
+    "periodo": "Integral",
+    "nome": "I1PECDR",
+    "tipo": "Aprendizagem"
+  }
+]

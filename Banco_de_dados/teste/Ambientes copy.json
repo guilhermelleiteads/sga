@@ -1,0 +1,257 @@
+[
+    {
+        "nome": "LAB. INFO 1",
+        "tipo": "SALA",
+        "local": "SETOR A TERREO"
+    },
+    {
+        "nome": "LAB. INFO 2",
+        "tipo": "SALA",
+        "local": "SETOR A TERREO"
+    },
+    {
+        "nome": "METROLOGIA/ENSAIOS",
+        "tipo": "SALA",
+        "local": "SETOR A TERREO"
+    },
+    {
+        "nome": "ELETRONICA/AUTOMAÇÃO",
+        "tipo": "SALA",
+        "local": "SETOR A TERREO"
+    },
+    {
+        "nome": "LABORATÓRIO DE CLP 1",
+        "tipo": "SALA",
+        "local": "SETOR A TERREO"
+    },
+    {
+        "nome": "LABORATÓRIO DE CLP 2",
+        "tipo": "SALA",
+        "local": "SETOR A TERREO"
+    },
+    {
+        "nome": "CAD/CAM 1",
+        "tipo": "SALA",
+        "local": "SETOR A TÉRREO"
+    },
+    {
+        "nome": "CAD/CAM 2",
+        "tipo": "SALA",
+        "local": "SETOR A TERREO"
+    },
+    {
+        "nome": "COORDENAÇÃO TÉCNICA/PEDAGO",
+        "tipo": "SALA",
+        "local": "SETOR A TERREO"
+    },
+    {
+        "nome": "OFICINA ELETRONICA",
+        "tipo": "OFICINA",
+        "local": "SETOR A TERREO"
+    },
+    {
+        "nome": "OFICINA ELETRICA",
+        "tipo": "OFICINA",
+        "local": "SETOR A TERREO"
+    },
+    {
+        "nome": "OFICINA CNC FERRAMENTARIA",
+        "tipo": "OFICINA",
+        "local": "SETOR A TERREO"
+    },
+    {
+        "nome": "OFICINA TORNEARIA FERRAMENTARIA",
+        "tipo": "OFICINA",
+        "local": "SETOR A TERREO"
+    },
+    {
+        "nome": "OFICINA AJUSTAGEM FERRAMENTARIA",
+        "tipo": "OFICINA",
+        "local": "SETOR A TERREO"
+    },
+    {
+        "nome": "OFICINA ESTAMPARIA FERRAMENTARIA",
+        "tipo": "OFICINA",
+        "local": "SETOR A TERREO"
+    },
+    {
+        "nome": "OFICINA AJUSTAGEM 2",
+        "tipo": "OFICINA",
+        "local": "SETOR A TERREO"
+    },
+    {
+        "nome": "OFICINA TORNEARIA 2",
+        "tipo": "OFICINA",
+        "local": "SETOR A TERREO"
+    },
+    {
+        "nome": "OFICINA CNC 2",
+        "tipo": "OFICINA",
+        "local": "SETOR A TERREO"
+    },
+    {
+        "nome": "DEPÓSITO CORREDOR ELÉTRICA",
+        "tipo": "SALA",
+        "local": "SETOR B TERREO"
+    },
+    {
+        "nome": "PLANTA INDUSTRIA 4.0",
+        "tipo": "SALA",
+        "local": "SETOR B TERREO"
+    },
+    {
+        "nome": "LAB. HIDRAULICA",
+        "tipo": "SALA",
+        "local": "SETOR B TERREO"
+    },
+    {
+        "nome": "LAB. PENEUMÁTICA",
+        "tipo": "SALA",
+        "local": "SETOR B TERREO"
+    },
+    {
+        "nome": "SALA 7-AUDITÓRIO",
+        "tipo": "SALA",
+        "local": "SETOR B TERREO"
+    },
+    {
+        "nome": "SALA 6-AUDITÓRIO - DESENHO",
+        "tipo": "SALA",
+        "local": "SETOR B TERREO"
+    },
+    {
+        "nome": "LAB. CNC",
+        "tipo": "SALA",
+        "local": "SETOR B TERREO"
+    },
+    {
+        "nome": "SALA PREPARAÇÃO DOCENTES",
+        "tipo": "SALA",
+        "local": "SETOR B TERREO"
+    },
+    {
+        "nome": "PROJETOS",
+        "tipo": "SALA",
+        "local": "SETOR B TERREO"
+    },
+    {
+        "nome": "LAB. INFO 3",
+        "tipo": "SALA",
+        "local": "SETOR B TERREO"
+    },
+    {
+        "nome": "COORDENAÇÃO SUPERIOR",
+        "tipo": "SALA",
+        "local": "SETOR B 1°. ANDAR"
+    },
+    {
+        "nome": "SALA REUNIÃO SUPERIOR",
+        "tipo": "SALA",
+        "local": "SETOR B 1°. ANDAR"
+    },
+    {
+        "nome": "LAB. AUTOMAÇÃO PREDIAL",
+        "tipo": "SALA",
+        "local": "SETOR B 1°. ANDAR"
+    },
+    {
+        "nome": "SALA 1",
+        "tipo": "SALA",
+        "local": "SETOR B 1°. ANDAR"
+    },
+    {
+        "nome": "SALA 2-AUDITÓRIO",
+        "tipo": "SALA",
+        "local": "SETOR B 1º. ANDAR"
+    },
+    {
+        "nome": "SALA 3-AUDITÓRIO",
+        "tipo": "SALA",
+        "local": "SETOR B 1°. ANDAR"
+    },
+    {
+        "nome": "SALA 4",
+        "tipo": "SALA",
+        "local": "SETOR B 1º. ANDAR"
+    },
+    {
+        "nome": "SALA 5",
+        "tipo": "SALA",
+        "local": "SETOR B 1°. ANDAR"
+    },
+    {
+        "nome": "LAB. INFO 4",
+        "tipo": "SALA",
+        "local": "SETOR B 1°. ANDAR"
+    },
+    {
+        "nome": "RESIDUOS/TAMBORES SUCATA",
+        "tipo": "SALA",
+        "local": "EXTERNO"
+    },
+    {
+        "nome": "COMPRESSORES",
+        "tipo": "SALA",
+        "local": "EXTERNO"
+    },
+    {
+        "nome": "INVERSORES",
+        "tipo": "SALA",
+        "local": "EXTERNO"
+    },
+    {
+        "nome": "DEPÓSITO ESCADA",
+        "tipo": "SALA",
+        "local": "EXTERNO"
+    },
+    {
+        "nome": "DEPÓSITO DE ÓLEO",
+        "tipo": "SALA",
+        "local": "EXTERNO"
+    },
+    {
+        "nome": "MDI",
+        "tipo": "SALA",
+        "local": "SUBSOLO"
+    },
+    {
+        "nome": "SALA ESTAGIÁRIOS",
+        "tipo": "SALA",
+        "local": "SUBSOLO"
+    },
+    {
+        "nome": "ALMOXARIFADO",
+        "tipo": "SALA",
+        "local": "SUBSOLO"
+    },
+    {
+        "nome": "MANUTENÇÃO",
+        "tipo": "SALA",
+        "local": "SUBSOLO"
+    },
+    {
+        "nome": "ZELADORIA",
+        "tipo": "SALA",
+        "local": "SUBSOLO"
+    },
+    {
+        "nome": "DEPÓSTIO FUNDOS (FLUÍDOS)",
+        "tipo": "SALA",
+        "local": "EXTERNO"
+    },
+    {
+        "nome": "SALA APOIΟ",
+        "tipo": "SALA",
+        "local": "SETOR A TERREO"
+    },
+    {
+        "nome": "SALA DE REUNIÃO 1-NÚCLEO",
+        "tipo": "SALA",
+        "local": "SUBSOLO"
+    },
+    {
+        "nome": "SALA DE REUNIÃO 1 - NÚCLEO",
+        "tipo": "SALA",
+        "local": "SUBSOLO"
+    }
+]
