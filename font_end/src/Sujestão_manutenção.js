@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { apiFetch } from './api';
 import BotaoVoltar from './Botao_voltar';
 import './Sujestão_manutenção.css';
 
@@ -24,7 +25,7 @@ function Sujestão_manutenção() {
 		setSending(true);
 		setError('');
 		try {
-			const response = await fetch('/api/sugestoes', {
+			const response = await apiFetch('/api/sugestoes-manutencao', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(formData),

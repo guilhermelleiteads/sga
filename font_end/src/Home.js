@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useMemo, useState } from 'react';
+import { apiFetch } from './api';
 import './Home.css';
 
 function normalizeText(value) {
@@ -15,6 +16,18 @@ function isCurrentSchedule(schedule, now) {
 	return currentMinutes >= startHour * 60 + startMinute && currentMinutes < endHour * 60 + endMinute;
 }
 
+async function readApiResponse(response) {
+	const responseText = await response.text();
+	if (!responseText.trim()) {
+		throw new Error(response.ok ? 'A API retornou uma resposta vazia.' : 'Não foi possível conectar à API. Inicie o backend e tente novamente.');
+	}
+	try {
+		return JSON.parse(responseText);
+	} catch {
+		throw new Error('A API retornou uma resposta inválida.');
+	}
+}
+
 function Home() {
 	const navigate = useNavigate();
 	const [usages, setUsages] = useState([]);
@@ -26,9 +39,9 @@ function Home() {
 	useEffect(() => {
 		async function loadUsage() {
 			try {
-				const [usageResponse, environmentResponse] = await Promise.all([fetch('/api/utilizacao'), fetch('/api/ambientes')]);
-				const [usageResult, environmentResult] = await Promise.all([usageResponse.json(), environmentResponse.json()]);
-				if (!usageResponse.ok) throw new Error(usageResult.erro || 'Não foi possível carregar a utilização dos ambientes.');
+				const [usageResponse, environmentResponse] = await Promise.all([apiFetch('/api/alocacoes-ambiente'), apiFetch('/api/ambientes')]);
+				const [usageResult, environmentResult] = await Promise.all([readApiResponse(usageResponse), readApiResponse(environmentResponse)]);
+				if (!usageResponse.ok) throw new Error(usageResult.erro || 'Não foi possível carregar a alocacao dos ambientes.');
 				if (!environmentResponse.ok) throw new Error(environmentResult.erro || 'Não foi possível carregar os ambientes.');
 				setUsages(Array.isArray(usageResult) ? usageResult : []);
 				setEnvironments(Array.isArray(environmentResult) ? environmentResult : []);
@@ -45,12 +58,14 @@ function Home() {
 	}, []);
 
 	const currentUsages = useMemo(() => {
-		const currentDay = normalizeText(now.toLocaleDateString('pt-BR', { weekday: 'long' }));
 		const environmentById = new Map(environments.map((environment) => [String(environment.id), environment]));
-		return usages.filter((usage) => {
-			const environment = environmentById.get(String(usage.ambienteId));
-			return environment && normalizeText(usage.diaSemana) === currentDay && isCurrentSchedule(usage.horario, now);
-		}).map((usage) => ({ ...usage, environment: environmentById.get(String(usage.ambienteId)) }));
+		return usages.map((usage) => ({
+			...usage,
+			environment: environmentById.get(String(usage.ambienteId)) || {
+				codigo: usage.ambienteCodigo || `AMB-${usage.ambienteId}`,
+				nome: usage.ambienteNome || 'Ambiente não identificado',
+			},
+		}));
 	}, [environments, now, usages]);
 
 	const currentTime = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
@@ -80,11 +95,11 @@ function Home() {
 					<div className="board-heading" role="row">
 						<span>HORÁRIO</span><span>DESTINO / TURMA</span><span>AMBIENTE</span><span>STATUS</span>
 					</div>
-					{loading && <p className="board-message">Carregando utilização...</p>}
+					{loading && <p className="board-message">Carregando alocacoes...</p>}
 					{error && <p className="board-message board-error" role="alert">{error}</p>}
 					{!loading && !error && currentUsages.length === 0 && <p className="board-message">Nenhum ambiente ocupado neste horário.</p>}
 					{!loading && !error && currentUsages.map((usage) => <div className="flight-row active-row" role="row" key={usage.id}>
-						<strong>{usage.horario}</strong><span><b>{usage.aulaDescricao || usage.aulaId}</b><small>{usage.diaSemana} · {usage.periodo || 'Período não informado'}</small></span><span className="gate">{usage.environment.codigo} · {usage.environment.nome}</span><span className="status boarding">EM ANDAMENTO</span>
+						<strong>{usage.horario || 'Horário da turma'}</strong><span><b>{usage.aulaDescricao || usage.aulaId}</b><small>{usage.diaSemana || 'Alocação registrada'} · {usage.periodo || 'Período não informado'}</small></span><span className="gate">{usage.environment.codigo} · {usage.environment.nome}</span><span className="status boarding">ALOCADO</span>
 					</div>)}
 				</div>
 			</section>

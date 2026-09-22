@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { apiFetch } from './api';
 import './Alocação_de_ambiente.css';
 import BotaoVoltar from './Botao_voltar';
 
@@ -21,7 +22,7 @@ function Alocação_de_ambiente() {
 	useEffect(() => {
 		async function loadData() {
 			try {
-				const [environmentResponse, classResponse] = await Promise.all([fetch('/api/ambientes'), fetch('/api/aulas')]);
+				const [environmentResponse, classResponse] = await Promise.all([apiFetch('/api/ambientes'), apiFetch('/api/atribuicoes')]);
 				const [environmentResult, classResult] = await Promise.all([environmentResponse.json(), classResponse.json()]);
 				if (!environmentResponse.ok) throw new Error(environmentResult.erro || 'Não foi possível carregar os ambientes.');
 				if (!classResponse.ok) throw new Error(classResult.erro || 'Não foi possível carregar as aulas.');
@@ -54,7 +55,7 @@ function Alocação_de_ambiente() {
 		setMessage('');
 		setError('');
 		try {
-			const response = await fetch('/api/alocacoes', {
+			const response = await apiFetch('/api/alocacoes-ambiente', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(formData),

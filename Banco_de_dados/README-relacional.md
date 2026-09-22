@@ -18,4 +18,4 @@ O arquivo `t.sql` e uma planilha TSV exportada, nao um script SQL. A conversao f
 
 O arquivo `t-relacional.sql` foi gerado a partir do TSV e contem 623 linhas validas. Docentes ausentes na planilha sao gravados como `NULL`, sem criar registros ficticios.
 
-Este modelo representa os dados academicos de `t.sql`. Ele e separado das tabelas operacionais usadas pela aplicacao (`sugestoes`, `ambientes`, `utilizacao` etc.).
+Este modelo representa os dados academicos de `t.sql` e usa as tabelas relacionais existentes no Supabase, incluindo `alocacoes_ambiente`, `turma_componentes_docentes` e `sugestoes_manutencao`.

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { apiFetch } from './api';
 import './Relatorio_de_turmas.css';
 import BotaoVoltar from './Botao_voltar';
 
@@ -10,7 +11,7 @@ function Relatorio_de_turmas() {
 	useEffect(() => {
 		async function loadClasses() {
 			try {
-				const response = await fetch('/api/turmas');
+				const response = await apiFetch('/api/turmas');
 				const result = await response.json();
 				if (!response.ok) throw new Error(result.erro || 'Não foi possível carregar as turmas.');
 				setClasses(Array.isArray(result) ? result : []);

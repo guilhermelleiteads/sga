@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { apiFetch } from './api';
 import './Relatorio_de_manutenção.css';
 import BotaoVoltar from './Botao_voltar';
 
@@ -14,7 +15,7 @@ function RelatorioDeManutencao() {
 	useEffect(() => {
 		async function loadSuggestions() {
 			try {
-				const response = await fetch('/api/sugestoes');
+				const response = await apiFetch('/api/sugestoes-manutencao');
 				if (!response.ok) throw new Error('Não foi possível carregar as sugestões.');
 				setSuggestions(await response.json());
 			} catch (loadError) {

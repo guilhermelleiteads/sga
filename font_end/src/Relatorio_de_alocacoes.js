@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { apiFetch } from './api';
 import './Relatorio_de_alocacoes.css';
 import BotaoVoltar from './Botao_voltar';
 
@@ -19,7 +20,7 @@ function Relatorio_de_alocacoes() {
 	useEffect(() => {
 		async function loadAllocations() {
 			try {
-				const response = await fetch('/api/utilizacao');
+				const response = await apiFetch('/api/alocacoes-ambiente');
 				const result = await readAllocationsResponse(response);
 				if (!response.ok) throw new Error(result.erro || 'Não foi possível carregar as utilizações.');
 				setAllocations(Array.isArray(result) ? result : []);

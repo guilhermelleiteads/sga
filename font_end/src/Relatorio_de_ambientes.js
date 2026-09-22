@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { apiFetch } from './api';
 import './Relatorio_de_ambientes.css';
 import BotaoVoltar from './Botao_voltar';
 
@@ -10,7 +11,7 @@ function Relatorio_de_ambientes() {
 	useEffect(() => {
 		async function loadUsages() {
 			try {
-				const response = await fetch('/api/utilizacao');
+				const response = await apiFetch('/api/alocacoes-ambiente');
 				const result = await response.json();
 				if (!response.ok) throw new Error(result.erro || 'Não foi possível carregar a utilização dos ambientes.');
 				setUsages(Array.isArray(result) ? result : []);

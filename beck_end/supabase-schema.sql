@@ -1,37 +1,6 @@
--- Execute este SQL no SQL Editor do Supabase.
+-- As tabelas da aplicação são relacionais e devem ser criadas pelo
+-- Banco_de_dados/schema-relacional.sql.
 -- A service role key deve ficar somente no backend, nunca no frontend.
-create table if not exists sugestoes (
-  id text primary key,
-  data jsonb not null,
-  created_at timestamptz not null default now()
-);
-
-create table if not exists turmas (
-  id text primary key,
-  data jsonb not null,
-  created_at timestamptz not null default now()
-);
-
-create table if not exists docentes (
-  id text primary key,
-  data jsonb not null,
-  created_at timestamptz not null default now()
-);
-
-create table if not exists ambientes (
-  id text primary key,
-  data jsonb not null,
-  created_at timestamptz not null default now()
-);
-
-create table if not exists aulas (
-  id text primary key,
-  data jsonb not null,
-  created_at timestamptz not null default now()
-);
-
-create table if not exists utilizacao (
-  id text primary key,
-  data jsonb not null,
-  created_at timestamptz not null default now()
-);
+grant usage on schema public to service_role;
+grant select, insert, update, delete on all tables in schema public to service_role;
+grant usage, select on all sequences in schema public to service_role;

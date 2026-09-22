@@ -1,5 +1,6 @@
 import BotaoVoltar from './Botao_voltar';
 import { useEffect, useState } from 'react';
+import { apiFetch } from './api';
 import './Alocação_de_ambiente.css';
 
 function Solicitação_de_Ambiente() {
@@ -21,7 +22,7 @@ function Solicitação_de_Ambiente() {
 	useEffect(() => {
 		async function loadOptions() {
 			try {
-				const [environmentResponse, classResponse] = await Promise.all([fetch('/api/ambientes'), fetch('/api/aulas')]);
+				const [environmentResponse, classResponse] = await Promise.all([apiFetch('/api/ambientes'), apiFetch('/api/atribuicoes')]);
 				const [environmentResult, classResult] = await Promise.all([environmentResponse.json(), classResponse.json()]);
 				if (!environmentResponse.ok) throw new Error(environmentResult.erro || 'Não foi possível carregar os ambientes.');
 				if (!classResponse.ok) throw new Error(classResult.erro || 'Não foi possível carregar as aulas.');
@@ -50,14 +51,14 @@ function Solicitação_de_Ambiente() {
 		setMessage('');
 		setError('');
 		try {
-			const response = await fetch('/api/alocacoes', {
+			const response = await apiFetch('/api/alocacoes-ambiente', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(formData),
 			});
 			const result = await response.json();
 			if (!response.ok) throw new Error(result.erro || 'Não foi possível registrar a solicitação.');
-			setMessage('Solicitação registrada com sucesso em Utilização.json.');
+			setMessage('Solicitação registrada com sucesso no banco de dados.');
 			setFormData({ ambienteId: '', aulaId: '', diaSemana: '', periodo: '', horario: '' });
 		} catch (submitError) {
 			setError(submitError.message);

@@ -1,5 +1,6 @@
 import BotaoVoltar from './Botao_voltar';
 import { useState } from 'react';
+import { apiFetch } from './api';
 import './Cadastro_de_turma_doscente.css';
 
 async function readResponse(response) {
@@ -62,7 +63,7 @@ function Cadastro_de_turma_doscente() {
 		setMessage('');
 		setError('');
 		try {
-			const response = await fetch('/api/turmas', {
+			const response = await apiFetch('/api/turmas', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(formData),
@@ -84,7 +85,7 @@ function Cadastro_de_turma_doscente() {
 		setTeacherMessage('');
 		setTeacherError('');
 		try {
-			const response = await fetch('/api/docentes', {
+			const response = await apiFetch('/api/docentes', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(teacherData),

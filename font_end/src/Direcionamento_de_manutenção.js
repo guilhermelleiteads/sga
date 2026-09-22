@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { apiFetch } from './api';
 import './Direcionamento_de_manutenção.css';
 import BotaoVoltar from './Botao_voltar';
 
@@ -15,7 +16,7 @@ function Direcionamento_de_manutenção() {
 	useEffect(() => {
 		async function loadSuggestions() {
 			try {
-				const response = await fetch('/api/sugestoes');
+				const response = await apiFetch('/api/sugestoes-manutencao');
 				if (!response.ok) throw new Error('Não foi possível carregar as sugestões.');
 				setSuggestions(await response.json());
 			} catch (loadError) {
@@ -34,7 +35,7 @@ function Direcionamento_de_manutenção() {
 		setSavingId(suggestion.id);
 		setError('');
 		try {
-			const response = await fetch(`/api/sugestoes/${suggestion.id}`, {
+				const response = await apiFetch(`/api/sugestoes-manutencao/${suggestion.id}`, {
 				method: 'PATCH',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({

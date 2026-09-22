@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { apiFetch } from './api';
 import './Atribuição_de_aula.css';
 import BotaoVoltar from './Botao_voltar';
 
@@ -17,7 +18,7 @@ function Atribuição_de_aula() {
 	useEffect(() => {
 		async function loadTurmas() {
 			try {
-				const response = await fetch('/api/turmas');
+				const response = await apiFetch('/api/turmas');
 				const result = await response.json();
 				if (!response.ok) throw new Error(result.erro || 'Não foi possível carregar as turmas.');
 				setTurmas(result);
@@ -34,7 +35,7 @@ function Atribuição_de_aula() {
 	useEffect(() => {
 		async function loadDocentes() {
 			try {
-				const response = await fetch('/api/docentes');
+				const response = await apiFetch('/api/docentes');
 				const result = await response.json();
 				if (!response.ok) throw new Error(result.erro || 'Não foi possível carregar os docentes.');
 				setDocentes(result);
@@ -61,7 +62,7 @@ function Atribuição_de_aula() {
 		setMessage('');
 		setError('');
 		try {
-			const response = await fetch('/api/aulas', {
+			const response = await apiFetch('/api/atribuicoes', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(formData),
