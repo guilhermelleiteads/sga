@@ -1,256 +1,498 @@
-const http = require('http');
-const {
-	readCollection,
-	createClass,
-	createTeacher,
-	createAllocation,
-	createAssignment,
-	createSuggestion,
-	updateSuggestion,
-	usingSupabase,
-} = require('./storage');
+const express = require('express');
+const cors = require('cors');
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
+const supabase = require('./supabase');
 
+const app = express();
 const port = process.env.PORT || 3001;
 
-function sendJson(response, statusCode, data) {
-	response.writeHead(statusCode, {
-		'Content-Type': 'application/json; charset=utf-8',
-		'Access-Control-Allow-Origin': '*',
-		'Access-Control-Allow-Headers': 'Content-Type',
-		'Access-Control-Allow-Methods': 'GET, POST, PATCH, OPTIONS',
-	});
-	response.end(JSON.stringify(data));
-}
+// Middlewares
+app.use(cors());
+app.use(express.json());
 
-async function readMaintenanceSuggestions() {
-	return readCollection('sugestoes_manutencao');
-}
-
-async function readAssignments() {
-	return readCollection('turma_componentes_docentes');
-}
-
-async function readClasses() {
-	return readCollection('turmas');
-}
-
-async function readTeachers() {
-	return readCollection('docentes');
-}
-
-async function readEnvironments() {
-	return readCollection('ambientes');
-}
-
-async function readEnvironmentAllocations() {
-	return readCollection('alocacoes_ambiente');
-}
-
-async function readRequestBody(request) {
-	let body = '';
-	for await (const chunk of request) body += chunk;
-	return JSON.parse(body);
-}
-
-const server = http.createServer(async (request, response) => {
-	if (request.method === 'OPTIONS') {
-		sendJson(response, 204, {});
-		return;
-	}
-
-	if (request.url === '/api/health' && request.method === 'GET') {
-		sendJson(response, usingSupabase ? 200 : 503, {
-			ok: usingSupabase,
-			storage: usingSupabase ? 'supabase' : 'not-configured',
-			erro: usingSupabase ? undefined : 'Configure SUPABASE_URL e SUPABASE_SERVICE_ROLE_KEY no arquivo .env do backend.',
+// Middleware de verificação de conexão com Supabase
+const checkSupabase = (req, res, next) => {
+	if (!supabase) {
+		return res.status(503).json({
+			erro: 'Supabase não configurado. Verifique SUPABASE_URL e SUPABASE_SERVICE_ROLE_KEY no .env'
 		});
-		return;
 	}
+	next();
+};
 
-	if (request.url === '/api/sugestoes-manutencao' && request.method === 'GET') {
-		try {
-			sendJson(response, 200, await readMaintenanceSuggestions());
-		} catch {
-			sendJson(response, 500, { erro: 'Não foi possível ler as sugestões.' });
-		}
-		return;
-	}
-
-	if (request.url === '/api/turmas' && request.method === 'GET') {
-		try {
-			sendJson(response, 200, await readClasses());
-		} catch {
-			sendJson(response, 500, { erro: 'Não foi possível ler as turmas.' });
-		}
-		return;
-	}
-
-	if (request.url === '/api/turmas' && request.method === 'POST') {
-		try {
-			const payload = await readRequestBody(request);
-			const codigo = String(payload.codigo || '').trim();
-			const nome = String(payload.nome || '').trim();
-			const curso = String(payload.curso || '').trim();
-			const turno = String(payload.turno || '').trim();
-			const materias = Array.isArray(payload.materias) ? payload.materias.map((subject) => String(subject || '').trim()).filter(Boolean) : [];
-
-			if (!codigo || !nome || !curso || !turno || materias.length > 5) {
-				sendJson(response, 400, { erro: 'Código, nome, curso e turno são obrigatórios; informe até cinco matérias.' });
-				return;
-			}
-
-			const newClass = await createClass({ codigo, nome, curso, turno, materias });
-			sendJson(response, 201, newClass);
-		} catch {
-			sendJson(response, 400, { erro: 'Não foi possível criar a turma.' });
-		}
-		return;
-	}
-
-	if (request.url === '/api/docentes' && request.method === 'GET') {
-		try {
-			sendJson(response, 200, await readTeachers());
-		} catch {
-			sendJson(response, 500, { erro: 'Não foi possível ler os docentes.' });
-		}
-		return;
-	}
-
-	if (request.url === '/api/docentes' && request.method === 'POST') {
-		try {
-			const payload = await readRequestBody(request);
-			const registro = String(payload.registro || '').trim();
-			const nome = String(payload.nome || '').trim();
-			const area = String(payload.area || '').trim();
-			if (!registro || !nome || !area) {
-				sendJson(response, 400, { erro: 'Registro, nome e área de atuação são obrigatórios.' });
-				return;
-			}
-
-			const newTeacher = await createTeacher({ registro, nome, area });
-			sendJson(response, 201, newTeacher);
-		} catch {
-			sendJson(response, 400, { erro: 'Não foi possível cadastrar o docente.' });
-		}
-		return;
-	}
-
-	if (request.url === '/api/ambientes' && request.method === 'GET') {
-		try {
-			sendJson(response, 200, await readEnvironments());
-		} catch {
-			sendJson(response, 500, { erro: 'Não foi possível ler os ambientes.' });
-		}
-		return;
-	}
-
-	if (request.url === '/api/atribuicoes' && request.method === 'GET') {
-		try {
-			sendJson(response, 200, await readAssignments());
-		} catch {
-			sendJson(response, 500, { erro: 'Não foi possível ler as atribuições.' });
-		}
-		return;
-	}
-
-	if (request.url === '/api/alocacoes-ambiente' && request.method === 'GET') {
-		try {
-			sendJson(response, 200, await readEnvironmentAllocations());
-		} catch (error) {
-			console.error('Erro ao ler alocações:', error.message);
-			sendJson(response, 500, { erro: 'Não foi possível ler as utilizações.' });
-		}
-		return;
-	}
-
-	if (request.url === '/api/alocacoes-ambiente' && request.method === 'POST') {
-		try {
-			const payload = await readRequestBody(request);
-			const ambienteId = String(payload.ambienteId || '').trim();
-			const aulaId = String(payload.aulaId || '').trim();
-			const diaSemana = String(payload.diaSemana || '').trim();
-			const periodo = String(payload.periodo || '').trim();
-			const horario = String(payload.horario || '').trim();
-			if (!ambienteId || !aulaId || !diaSemana || !periodo || !horario) {
-				sendJson(response, 400, { erro: 'Ambiente, aula, dia da semana, período e horário são obrigatórios.' });
-				return;
-			}
-
-			const allocation = await createAllocation({ ambienteId, aulaId, diaSemana, periodo, horario });
-			sendJson(response, 201, allocation);
-		} catch {
-			sendJson(response, 400, { erro: 'Não foi possível registrar a alocação.' });
-		}
-		return;
-	}
-
-	if (request.url === '/api/atribuicoes' && request.method === 'POST') {
-		try {
-			const payload = await readRequestBody(request);
-			const turma = String(payload.turma || '').trim();
-			const materia = String(payload.materia || '').trim();
-			const docente = String(payload.docente || '').trim();
-			if (!turma || !materia || !docente) {
-				sendJson(response, 400, { erro: 'Turma, matéria e docente são obrigatórios.' });
-				return;
-			}
-
-			const assignment = await createAssignment({ turma, materia, docente });
-			sendJson(response, 201, assignment);
-		} catch {
-			sendJson(response, 400, { erro: 'Não foi possível registrar a atribuição.' });
-		}
-		return;
-	}
-
-	const suggestionMatch = request.url.match(/^\/api\/sugestoes-manutencao\/([^/]+)$/);
-	if (suggestionMatch && request.method === 'PATCH') {
-		try {
-			const payload = await readRequestBody(request);
-			const allowedStatuses = ['Pendente', 'Em análise', 'Concluída'];
-			const status = String(payload.status || '').trim();
-			const comentario = String(payload.comentario || '').trim();
-
-			if (!allowedStatuses.includes(status)) {
-				sendJson(response, 400, { erro: 'Status de manutenção inválido.' });
-				return;
-			}
-
-			const suggestion = await updateSuggestion(suggestionMatch[1], { status, comentario });
-			if (!suggestion) {
-				sendJson(response, 404, { erro: 'Sugestão não encontrada.' });
-				return;
-			}
-			sendJson(response, 200, suggestion);
-		} catch {
-			sendJson(response, 400, { erro: 'Não foi possível atualizar o direcionamento.' });
-		}
-		return;
-	}
-
-	if (request.url === '/api/sugestoes-manutencao' && request.method === 'POST') {
-		try {
-			const payload = await readRequestBody(request);
-			const nome = String(payload.nome || '').trim();
-			const local = String(payload.local || '').trim();
-			const sugestao = String(payload.sugestao || '').trim();
-
-			if (!nome || !local || !sugestao) {
-				sendJson(response, 400, { erro: 'Nome, local e sugestão são obrigatórios.' });
-				return;
-			}
-
-			const newSuggestion = await createSuggestion({ nome, local, sugestao });
-			sendJson(response, 201, newSuggestion);
-		} catch {
-			sendJson(response, 400, { erro: 'Não foi possível registrar a sugestão.' });
-		}
-		return;
-	}
-
-	sendJson(response, 404, { erro: 'Rota não encontrada.' });
+// 1. Healthcheck
+app.get('/api/health', (req, res) => {
+	res.status(supabase ? 200 : 503).json({
+		ok: Boolean(supabase),
+		storage: supabase ? 'supabase' : 'not-configured',
+		erro: supabase ? undefined : 'Configure SUPABASE_URL e SUPABASE_SERVICE_ROLE_KEY no .env do backend.'
+	});
 });
 
-server.listen(port, () => {
-	console.log(`API disponível em http://localhost:${port}${usingSupabase ? ' (Supabase)' : ' (Supabase não configurado)'}`);
+// 2. Turmas
+app.get('/api/turmas', checkSupabase, async (req, res) => {
+	try {
+		const { data, error } = await supabase
+			.from('turmas')
+			.select('id, codigo, nome, turno, cursos(nome), turma_componentes_docentes(componentes_curriculares(nome))')
+			.order('id');
+
+		if (error) throw error;
+
+		const turmas = data.map((row) => ({
+			id: row.id,
+			codigo: row.codigo,
+			nome: row.nome || row.codigo,
+			curso: row.cursos?.nome || '',
+			turno: row.turno,
+			materias: (row.turma_componentes_docentes || [])
+				.map((item) => item.componentes_curriculares?.nome)
+				.filter(Boolean)
+		}));
+
+		res.json(turmas);
+	} catch (err) {
+		console.error('Erro ao buscar turmas:', err.message);
+		res.status(500).json({ erro: 'Não foi possível ler as turmas.' });
+	}
+});
+
+app.post('/api/turmas', checkSupabase, async (req, res) => {
+	try {
+		const { codigo, nome, curso, turno, materias = [] } = req.body;
+
+		if (!codigo?.trim() || !nome?.trim() || !curso?.trim() || !turno?.trim()) {
+			return res.status(400).json({ erro: 'Código, nome, curso e turno são obrigatórios.' });
+		}
+
+		// Localiza ou associa o curso
+		let { data: courseData } = await supabase
+			.from('cursos')
+			.select('id')
+			.ilike('nome', curso.trim())
+			.limit(1)
+			.maybeSingle();
+
+		if (!courseData) {
+			const { data: tipo } = await supabase.from('tipos_curso').select('id').limit(1).maybeSingle();
+			const { data: newCourse, error: courseErr } = await supabase
+				.from('cursos')
+				.insert({ tipo_curso_id: tipo ? tipo.id : 1, nome: curso.trim() })
+				.select('id')
+				.single();
+			if (courseErr) throw courseErr;
+			courseData = newCourse;
+		}
+
+		// Cria a turma
+		const { data: novaTurma, error: turmaErr } = await supabase
+			.from('turmas')
+			.insert({
+				codigo: codigo.trim(),
+				nome: nome.trim(),
+				curso_id: courseData.id,
+				turno: turno.trim(),
+				carga_horaria: 80,
+				situacao: 'Ativa'
+			})
+			.select('*')
+			.single();
+
+		if (turmaErr) throw turmaErr;
+
+		// Vincula as matérias
+		const materiasSalvas = [];
+		const listaMaterias = Array.isArray(materias) ? materias : [];
+		for (const materiaName of listaMaterias) {
+			const nomeLimpo = String(materiaName || '').trim();
+			if (!nomeLimpo) continue;
+
+			let { data: componente } = await supabase
+				.from('componentes_curriculares')
+				.select('id')
+				.ilike('nome', nomeLimpo)
+				.limit(1)
+				.maybeSingle();
+
+			if (!componente) {
+				const sigla = nomeLimpo.slice(0, 6).toUpperCase();
+				const { data: novoComp } = await supabase
+					.from('componentes_curriculares')
+					.insert({ sigla, nome: nomeLimpo })
+					.select('id')
+					.single();
+				componente = novoComp;
+			}
+
+			if (componente) {
+				await supabase.from('turma_componentes_docentes').insert({
+					turma_id: novaTurma.id,
+					componente_id: componente.id,
+					carga_horaria: 20
+				});
+				materiasSalvas.push(nomeLimpo);
+			}
+		}
+
+		res.status(201).json({
+			id: novaTurma.id,
+			codigo: novaTurma.codigo,
+			nome: novaTurma.nome,
+			curso: curso.trim(),
+			turno: novaTurma.turno,
+			materias: materiasSalvas
+		});
+	} catch (err) {
+		console.error('Erro ao criar turma:', err.message);
+		res.status(400).json({ erro: err.message || 'Não foi possível criar a turma.' });
+	}
+});
+
+// 3. Docentes
+app.get('/api/docentes', checkSupabase, async (req, res) => {
+	try {
+		const { data, error } = await supabase
+			.from('docentes')
+			.select('id, registro, nome, area')
+			.order('nome');
+
+		if (error) throw error;
+		res.json(data);
+	} catch (err) {
+		console.error('Erro ao buscar docentes:', err.message);
+		res.status(500).json({ erro: 'Não foi possível ler os docentes.' });
+	}
+});
+
+app.post('/api/docentes', checkSupabase, async (req, res) => {
+	try {
+		const { registro, nome, area } = req.body;
+		if (!registro?.trim() || !nome?.trim() || !area?.trim()) {
+			return res.status(400).json({ erro: 'Registro, nome e área de atuação são obrigatórios.' });
+		}
+
+		const { data, error } = await supabase
+			.from('docentes')
+			.insert({
+				registro: registro.trim(),
+				nome: nome.trim(),
+				area: area.trim()
+			})
+			.select('*')
+			.single();
+
+		if (error) throw error;
+		res.status(201).json(data);
+	} catch (err) {
+		console.error('Erro ao cadastrar docente:', err.message);
+		res.status(400).json({ erro: err.message || 'Não foi possível cadastrar o docente.' });
+	}
+});
+
+// 4. Ambientes
+app.get('/api/ambientes', checkSupabase, async (req, res) => {
+	try {
+		const { data, error } = await supabase
+			.from('ambientes')
+			.select('id, nome, tipo, local, capacidade, status')
+			.order('id');
+
+		if (error) throw error;
+
+		const ambientes = data.map((row) => ({
+			...row,
+			codigo: row.tipo || `AMB-${row.id}`
+		}));
+
+		res.json(ambientes);
+	} catch (err) {
+		console.error('Erro ao buscar ambientes:', err.message);
+		res.status(500).json({ erro: 'Não foi possível ler os ambientes.' });
+	}
+});
+
+// 5. Atribuições de Aula
+app.get('/api/atribuicoes', checkSupabase, async (req, res) => {
+	try {
+		const { data, error } = await supabase
+			.from('turma_componentes_docentes')
+			.select(`
+				id,
+				turma_id,
+				componente_id,
+				docente_id,
+				turmas(id, codigo, nome, turno, horario_inicio, horario_fim),
+				componentes_curriculares(id, nome, sigla),
+				docentes(id, nome, registro)
+			`)
+			.order('id');
+
+		if (error) throw error;
+
+		const atribuicoes = data.map((row) => ({
+			id: row.id,
+			turma: row.turmas?.nome || row.turmas?.codigo || '',
+			materia: row.componentes_curriculares?.nome || '',
+			docente: row.docentes?.nome || '',
+			turmaCodigo: row.turmas?.codigo || '',
+			turno: row.turmas?.turno || '',
+			horarioInicio: row.turmas?.horario_inicio || '',
+			horarioFim: row.turmas?.horario_fim || ''
+		}));
+
+		res.json(atribuicoes);
+	} catch (err) {
+		console.error('Erro ao buscar atribuições:', err.message);
+		res.status(500).json({ erro: 'Não foi possível ler as atribuições.' });
+	}
+});
+
+app.post('/api/atribuicoes', checkSupabase, async (req, res) => {
+	try {
+		const { turma, materia, docente } = req.body;
+		if (!turma?.trim() || !materia?.trim() || !docente?.trim()) {
+			return res.status(400).json({ erro: 'Turma, matéria e docente são obrigatórios.' });
+		}
+
+		const { data: t } = await supabase
+			.from('turmas')
+			.select('id, nome, codigo')
+			.or(`nome.eq.${turma.trim()},codigo.eq.${turma.trim()}`)
+			.limit(1)
+			.maybeSingle();
+
+		const { data: c } = await supabase
+			.from('componentes_curriculares')
+			.select('id')
+			.eq('nome', materia.trim())
+			.limit(1)
+			.maybeSingle();
+
+		const { data: d } = await supabase
+			.from('docentes')
+			.select('id')
+			.eq('nome', docente.trim())
+			.limit(1)
+			.maybeSingle();
+
+		if (!t || !c || !d) {
+			return res.status(400).json({ erro: 'Turma, matéria ou docente não encontrados.' });
+		}
+
+		const { data, error } = await supabase
+			.from('turma_componentes_docentes')
+			.insert({
+				turma_id: t.id,
+				componente_id: c.id,
+				docente_id: d.id,
+				carga_horaria: 20
+			})
+			.select('*')
+			.single();
+
+		if (error) throw error;
+		res.status(201).json(data);
+	} catch (err) {
+		console.error('Erro ao registrar atribuição:', err.message);
+		res.status(400).json({ erro: err.message || 'Não foi possível registrar a atribuição.' });
+	}
+});
+
+// 6. Alocações de Ambiente
+app.get('/api/alocacoes-ambiente', checkSupabase, async (req, res) => {
+	try {
+		const { data, error } = await supabase
+			.from('alocacoes_ambiente')
+			.select(`
+				id,
+				atribuicao_aula_id,
+				ambiente_id,
+				ambientes(id, nome, tipo),
+				turma_componentes_docentes(
+					id,
+					turmas(codigo, nome, horario_inicio, horario_fim, turno),
+					componentes_curriculares(nome),
+					docentes(nome)
+				)
+			`)
+			.order('id');
+
+		if (error) throw error;
+
+		const alocacoes = data.map((row) => {
+			const tcd = row.turma_componentes_docentes;
+			const turma = tcd?.turmas;
+			const turmaNome = turma?.nome || turma?.codigo || '';
+			const materiaNome = tcd?.componentes_curriculares?.nome || '';
+			const docenteNome = tcd?.docentes?.nome || '';
+
+			const horario = [turma?.horario_inicio, turma?.horario_fim]
+				.filter(Boolean)
+				.join(' - ') || turma?.turno || 'Horário da turma';
+
+			return {
+				id: row.id,
+				ambienteId: row.ambiente_id,
+				ambienteNome: `${row.ambientes?.tipo || `AMB-${row.ambiente_id}`} · ${row.ambientes?.nome || ''}`,
+				ambienteCodigo: row.ambientes?.tipo || `AMB-${row.ambiente_id}`,
+				aulaId: row.atribuicao_aula_id,
+				aulaDescricao: [turmaNome, materiaNome, docenteNome].filter(Boolean).join(' · '),
+				diaSemana: 'Segunda a Sexta',
+				horario,
+				periodo: turma?.turno || 'Semestral'
+			};
+		});
+
+		res.json(alocacoes);
+	} catch (err) {
+		console.error('Erro ao buscar alocações:', err.message);
+		res.status(500).json({ erro: 'Não foi possível ler as utilizações.' });
+	}
+});
+
+app.post('/api/alocacoes-ambiente', checkSupabase, async (req, res) => {
+	try {
+		const { ambienteId, aulaId, diaSemana, periodo, horario } = req.body;
+		if (!ambienteId || !aulaId) {
+			return res.status(400).json({ erro: 'Ambiente e aula são obrigatórios.' });
+		}
+
+		const { data, error } = await supabase
+			.from('alocacoes_ambiente')
+			.insert({
+				ambiente_id: Number(ambienteId),
+				atribuicao_aula_id: Number(aulaId)
+			})
+			.select('*')
+			.single();
+
+		if (error) throw error;
+
+		res.status(201).json({
+			...data,
+			diaSemana: diaSemana || 'Segunda a Sexta',
+			periodo: periodo || 'Semestral',
+			horario: horario || ''
+		});
+	} catch (err) {
+		console.error('Erro ao registrar alocação:', err.message);
+		res.status(400).json({ erro: err.message || 'Não foi possível registrar a alocação.' });
+	}
+});
+
+// 7. Sugestões de Manutenção
+app.get('/api/sugestoes-manutencao', checkSupabase, async (req, res) => {
+	try {
+		const { data, error } = await supabase
+			.from('sugestoes_manutencao')
+			.select('id, ambiente_id, nome, sujestao, status, criadoem, ambientes(nome, local)')
+			.order('id', { ascending: false });
+
+		if (error) throw error;
+
+		const sugestoes = data.map((row) => ({
+			id: row.id,
+			ambienteId: row.ambiente_id,
+			nome: row.nome,
+			sugestao: row.sujestao,
+			status: row.status || 'Pendente',
+			criadoEm: row.criadoem,
+			local: row.ambientes?.local || row.ambientes?.nome || 'Geral'
+		}));
+
+		res.json(sugestoes);
+	} catch (err) {
+		console.error('Erro ao buscar sugestões:', err.message);
+		res.status(500).json({ erro: 'Não foi possível ler as sugestões.' });
+	}
+});
+
+app.post('/api/sugestoes-manutencao', checkSupabase, async (req, res) => {
+	try {
+		const { nome, local, sugestao } = req.body;
+		if (!nome?.trim() || !sugestao?.trim()) {
+			return res.status(400).json({ erro: 'Nome e sugestão são obrigatórios.' });
+		}
+
+		let ambienteId = null;
+		if (local?.trim()) {
+			const { data: amb } = await supabase
+				.from('ambientes')
+				.select('id')
+				.or(`nome.ilike.%${local.trim()}%,local.ilike.%${local.trim()}%`)
+				.limit(1)
+				.maybeSingle();
+			if (amb) ambienteId = amb.id;
+		}
+
+		const { data, error } = await supabase
+			.from('sugestoes_manutencao')
+			.insert({
+				ambiente_id: ambienteId,
+				nome: nome.trim(),
+				sujestao: sugestao.trim(),
+				status: 'Pendente'
+			})
+			.select('id, ambiente_id, nome, sujestao, status, criadoem')
+			.single();
+
+		if (error) throw error;
+
+		res.status(201).json({
+			id: data.id,
+			ambienteId: data.ambiente_id,
+			nome: data.nome,
+			sugestao: data.sujestao,
+			status: data.status,
+			criadoEm: data.criadoem,
+			local: local?.trim() || 'Geral'
+		});
+	} catch (err) {
+		console.error('Erro ao registrar sugestão:', err.message);
+		res.status(400).json({ erro: err.message || 'Não foi possível registrar a sugestão.' });
+	}
+});
+
+app.patch('/api/sugestoes-manutencao/:id', checkSupabase, async (req, res) => {
+	try {
+		const { status } = req.body;
+		const allowedStatuses = ['Pendente', 'Em análise', 'Concluída'];
+		if (!allowedStatuses.includes(status)) {
+			return res.status(400).json({ erro: 'Status de manutenção inválido.' });
+		}
+
+		const { data, error } = await supabase
+			.from('sugestoes_manutencao')
+			.update({ status })
+			.eq('id', req.params.id)
+			.select('id, ambiente_id, nome, sujestao, status, criadoem, ambientes(nome, local)')
+			.maybeSingle();
+
+		if (error) throw error;
+		if (!data) return res.status(404).json({ erro: 'Sugestão não encontrada.' });
+
+		res.json({
+			id: data.id,
+			ambienteId: data.ambiente_id,
+			nome: data.nome,
+			sugestao: data.sujestao,
+			status: data.status,
+			criadoEm: data.criadoem,
+			local: data.ambientes?.local || data.ambientes?.nome || 'Geral'
+		});
+	} catch (err) {
+		console.error('Erro ao atualizar sugestão:', err.message);
+		res.status(400).json({ erro: err.message || 'Não foi possível atualizar a sugestão.' });
+	}
+});
+
+// Tratamento de rota não encontrada
+app.use((req, res) => {
+	res.status(404).json({ erro: 'Rota não encontrada.' });
+});
+
+app.listen(port, () => {
+	console.log(`🚀 Servidor SGA Express ativo na porta ${port}`);
+	console.log(`📡 Supabase: ${supabase ? 'Conectado' : 'Desconectado'}`);
 });
