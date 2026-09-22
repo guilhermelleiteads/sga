@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "buildCommand": "npm install && npm run build",
-  "outputDirectory": "build",
+  "buildCommand": "cd font_end && npm install && npm run build",
+  "outputDirectory": "font_end/build",
   "rewrites": [
     {
       "source": "/(.*)",
