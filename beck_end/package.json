@@ -2,6 +2,10 @@
   "name": "sga-backend",
   "version": "1.0.0",
   "private": true,
+  "dependencies": {
+    "@supabase/supabase-js": "^2.57.0",
+    "dotenv": "^17.2.2"
+  },
   "scripts": {
     "start": "node server.js"
   }

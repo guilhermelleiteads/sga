@@ -2,14 +2,18 @@ const http = require('http');
 const fs = require('fs/promises');
 const path = require('path');
 const { randomUUID } = require('crypto');
+const { readCollection, writeCollection, usingSupabase } = require('./storage');
 
 const port = process.env.PORT || 3001;
-const databasePath = path.join(__dirname, '..', 'Banco_de_dados', 'sujestoes.json');
-const aulasPath = path.join(__dirname, '..', 'Banco_de_dados', 'Aula.json');
-const classesPath = path.join(__dirname, '..', 'Banco_de_dados', 'Turmas.json');
-const teachersPath = path.join(__dirname, '..', 'Banco_de_dados', 'Docentes.json');
-const environmentsPath = path.join(__dirname, '..', 'Banco_de_dados', 'Ambientes.json');
-const allocationsPath = path.join(__dirname, '..', 'Banco_de_dados', 'utilização.json');
+
+const conectionString = process.env.DATABASE_URL || 'postgresql://postgres:0192@db.kypxmuvvtdxiatkbnzyy.supabase.co:5432/postgres';
+const pool = new pool({
+	connectionString: conectionString,
+	ssl: {
+		rejectUnauthorized: false,
+	},
+});
+
 
 function sendJson(response, statusCode, data) {
 	response.writeHead(statusCode, {
@@ -22,33 +26,27 @@ function sendJson(response, statusCode, data) {
 }
 
 async function readSuggestions() {
-	const file = await fs.readFile(databasePath, 'utf8');
-	return JSON.parse(file);
+	return readCollection(databasePath, 'sugestoes');
 }
 
 async function readAulas() {
-	const file = await fs.readFile(aulasPath, 'utf8');
-	return JSON.parse(file);
+	return readCollection(aulasPath, 'aulas');
 }
 
 async function readClasses() {
-	const file = await fs.readFile(classesPath, 'utf8');
-	return JSON.parse(file);
+	return readCollection(classesPath, 'turmas');
 }
 
 async function readTeachers() {
-	const file = await fs.readFile(teachersPath, 'utf8');
-	return JSON.parse(file);
+	return readCollection(teachersPath, 'docentes');
 }
 
 async function readEnvironments() {
-	const file = await fs.readFile(environmentsPath, 'utf8');
-	return JSON.parse(file);
+	return readCollection(environmentsPath, 'ambientes');
 }
 
 async function readAllocations() {
-	const file = await fs.readFile(allocationsPath, 'utf8');
-	return JSON.parse(file);
+	return readCollection(allocationsPath, 'utilizacao');
 }
 
 async function readRequestBody(request) {
@@ -60,6 +58,14 @@ async function readRequestBody(request) {
 const server = http.createServer(async (request, response) => {
 	if (request.method === 'OPTIONS') {
 		sendJson(response, 204, {});
+		return;
+	}
+
+	if (request.url === '/api/health' && request.method === 'GET') {
+		sendJson(response, 200, {
+			ok: true,
+			storage: usingSupabase ? 'supabase' : 'json-local',
+		});
 		return;
 	}
 
@@ -103,7 +109,7 @@ const server = http.createServer(async (request, response) => {
 
 			const newClass = { id: randomUUID(), codigo, nome, curso, turno, materias };
 			classes.push(newClass);
-			await fs.writeFile(classesPath, `${JSON.stringify(classes, null, 2)}\n`, 'utf8');
+			await writeCollection(classesPath, 'turmas', classes);
 			sendJson(response, 201, newClass);
 		} catch {
 			sendJson(response, 400, { erro: 'Não foi possível criar a turma.' });
@@ -140,7 +146,7 @@ const server = http.createServer(async (request, response) => {
 			const numericIds = teachers.map((teacher) => Number(teacher.id)).filter(Number.isFinite);
 			const newTeacher = { id: numericIds.length ? Math.max(...numericIds) + 1 : 1, registro, nome, area };
 			teachers.push(newTeacher);
-			await fs.writeFile(teachersPath, `${JSON.stringify(teachers, null, 2)}\n`, 'utf8');
+			await writeCollection(teachersPath, 'docentes', teachers);
 			sendJson(response, 201, newTeacher);
 		} catch {
 			sendJson(response, 400, { erro: 'Não foi possível cadastrar o docente.' });
@@ -210,7 +216,7 @@ const server = http.createServer(async (request, response) => {
 				criadoEm: new Date().toISOString(),
 			};
 			allocations.push(allocation);
-			await fs.writeFile(allocationsPath, `${JSON.stringify(allocations, null, 2)}\n`, 'utf8');
+			await writeCollection(allocationsPath, 'utilizacao', allocations);
 			sendJson(response, 201, allocation);
 		} catch {
 			sendJson(response, 400, { erro: 'Não foi possível registrar a alocação.' });
@@ -232,7 +238,7 @@ const server = http.createServer(async (request, response) => {
 			const aulas = await readAulas();
 			const aula = { id: randomUUID(), turma, materia, docente, criadoEm: new Date().toISOString() };
 			aulas.push(aula);
-			await fs.writeFile(aulasPath, `${JSON.stringify(aulas, null, 2)}\n`, 'utf8');
+			await writeCollection(aulasPath, 'aulas', aulas);
 			sendJson(response, 201, aula);
 		} catch {
 			sendJson(response, 400, { erro: 'Não foi possível registrar a atribuição.' });
@@ -262,7 +268,7 @@ const server = http.createServer(async (request, response) => {
 
 			suggestion.status = status;
 			suggestion.comentario = comentario;
-			await fs.writeFile(databasePath, `${JSON.stringify(suggestions, null, 2)}\n`, 'utf8');
+			await writeCollection(databasePath, 'sugestoes', suggestions);
 			sendJson(response, 200, suggestion);
 		} catch {
 			sendJson(response, 400, { erro: 'Não foi possível atualizar o direcionamento.' });
@@ -292,7 +298,7 @@ const server = http.createServer(async (request, response) => {
 				criadoEm: new Date().toISOString(),
 			};
 			suggestions.push(newSuggestion);
-			await fs.writeFile(databasePath, `${JSON.stringify(suggestions, null, 2)}\n`, 'utf8');
+			await writeCollection(databasePath, 'sugestoes', suggestions);
 			sendJson(response, 201, newSuggestion);
 		} catch {
 			sendJson(response, 400, { erro: 'Não foi possível registrar a sugestão.' });
@@ -304,5 +310,5 @@ const server = http.createServer(async (request, response) => {
 });
 
 server.listen(port, () => {
-	console.log(`API de sugestões disponível em http://localhost:${port}`);
+	console.log(`API disponível em http://localhost:${port}${usingSupabase ? ' (Supabase)' : ' (JSON local)'}`);
 });
