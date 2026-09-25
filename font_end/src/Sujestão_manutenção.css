@@ -46,9 +46,10 @@
 .panel-intro > p:last-child { color: var(--muted); line-height: 1.6; margin: 0; }
 .maintenance-form { margin-top: 42px; }
 .maintenance-form label { color: var(--ink); display: block; font-size: 13px; font-weight: 700; margin-bottom: 22px; }
-.maintenance-form input, .maintenance-form textarea { background: #fbfcfa; border: 1px solid var(--line); box-sizing: border-box; color: var(--ink); display: block; font: inherit; font-size: 15px; font-weight: 400; margin-top: 9px; outline: none; padding: 14px 15px; resize: vertical; width: 100%; }
-.maintenance-form input:focus, .maintenance-form textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(23, 107, 135, .12); }
+.maintenance-form input, .maintenance-form textarea, .maintenance-form select { background: #fbfcfa; border: 1px solid var(--line); box-sizing: border-box; color: var(--ink); display: block; font: inherit; font-size: 15px; font-weight: 400; margin-top: 9px; outline: none; padding: 14px 15px; resize: vertical; width: 100%; }
+.maintenance-form input:focus, .maintenance-form textarea:focus, .maintenance-form select:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(23, 107, 135, .12); }
 .maintenance-form input::placeholder, .maintenance-form textarea::placeholder { color: #9aa7ae; }
+.maintenance-form select { min-height: 50px; cursor: pointer; }
 .form-footer { align-items: center; display: flex; justify-content: flex-end; margin-top: 32px; min-height: 48px; }
 .success-message { color: #328263; font-size: 13px; margin: 0 auto 0 0; }
 .error-message { color: #a44343; font-size: 13px; margin: 0 auto 0 0; }

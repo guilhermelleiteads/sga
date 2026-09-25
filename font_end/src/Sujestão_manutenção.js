@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { apiFetch } from './api';
 import BotaoVoltar from './Botao_voltar';
 import './Sujestão_manutenção.css';
 
 function Sujestão_manutenção() {
+	const [environments, setEnvironments] = useState([]);
+	const [loadingEnv, setLoadingEnv] = useState(true);
 	const [formData, setFormData] = useState({
 		nome: '',
 		local: '',
@@ -12,6 +14,23 @@ function Sujestão_manutenção() {
 	const [submitted, setSubmitted] = useState(false);
 	const [sending, setSending] = useState(false);
 	const [error, setError] = useState('');
+
+	useEffect(() => {
+		async function loadEnvironments() {
+			try {
+				const response = await apiFetch('/api/ambientes');
+				const result = await response.json();
+				if (!response.ok) throw new Error(result.erro || 'Não foi possível carregar os ambientes.');
+				setEnvironments(result);
+			} catch (loadError) {
+				setError(loadError.message);
+			} finally {
+				setLoadingEnv(false);
+			}
+		}
+
+		loadEnvironments();
+	}, []);
 
 	function handleChange(event) {
 		const { name, value } = event.target;
@@ -65,7 +84,10 @@ function Sujestão_manutenção() {
 					</label>
 					<label htmlFor="local">
 						Local da sugestão
-						<input id="local" name="local" type="text" value={formData.local} onChange={handleChange} placeholder="Ex.: Bloco B, sala 204" required />
+						<select id="local" name="local" value={formData.local} onChange={handleChange} disabled={loadingEnv} required>
+							<option value="">{loadingEnv ? 'Carregando ambientes...' : 'Selecione um ambiente'}</option>
+							{environments.map((environment) => <option value={`${environment.codigo} · ${environment.nome}`} key={environment.id}>{environment.codigo} · {environment.nome}</option>)}
+						</select>
 					</label>
 					<label htmlFor="sugestao">
 						Sugestão
@@ -74,7 +96,7 @@ function Sujestão_manutenção() {
 					<div className="form-footer">
 						{submitted && <p className="success-message" role="status">Sugestão enviada com sucesso.</p>}
 						{error && <p className="error-message" role="alert">{error}</p>}
-						<button className="submit-button" type="submit" disabled={sending}>{sending ? 'Enviando...' : 'Enviar'} <span aria-hidden="true">↗</span></button>
+						<button className="submit-button" type="submit" disabled={sending || loadingEnv}>{sending ? 'Enviando...' : 'Enviar'} <span aria-hidden="true">↗</span></button>
 					</div>
 				</form>
 			</section>
