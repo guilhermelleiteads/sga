@@ -18,6 +18,7 @@ const profileActions = [
 		{ label: 'Alocação de ambiente', path: '/Alocação_de_ambiente' },
 		{ label: 'Atribuição de aula', path: '/Atribuição_de_turma' },
 		{ label: 'Cadastro de turma/docente', path: '/Cadastro_de_turma_doscente' },
+			{ label: 'Criar usuário', path: '/criar-usuario' },
 	] },
 	{ profile: 'Secretaria', actions: [
 		{ label: 'Cadastro de turma/docente', path: '/Cadastro_de_turma_doscente' },
@@ -60,7 +61,7 @@ function Relatorio() {
 						<div className="profile-group" key={profile.profile}>
 							<div className="action-list">
 								{profile.actions.map((action) => (
-									<button type="button" key={action.path} onClick={() => navigate(action.path)}>{action.label} <span aria-hidden="true">↗</span></button>
+									<button type="button" key={action.path} onClick={() => navigate(action.path, { state: { perfil, login: location.state?.login } })}>{action.label} <span aria-hidden="true">↗</span></button>
 								))}
 							</div>
 						</div>

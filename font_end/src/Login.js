@@ -2,6 +2,17 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
+const registeredUsersKey = 'sga-usuarios';
+
+function readRegisteredUsers() {
+	try {
+		const users = JSON.parse(window.localStorage.getItem(registeredUsersKey) || '[]');
+		return Array.isArray(users) ? users : [];
+	} catch {
+		return [];
+	}
+}
+
 function Login() {
 	const navigate = useNavigate();
 	const [formData, setFormData] = useState({ login: '', senha: '' });
@@ -17,8 +28,9 @@ function Login() {
 		event.preventDefault();
 		try {
 			const response = await fetch('/logins.json');
-			const users = await response.json();
-			const user = users.find((item) => item.login === formData.login && item.senha === formData.senha);
+			if (!response.ok) throw new Error('Não foi possível carregar os usuários.');
+			const users = [...await response.json(), ...readRegisteredUsers()];
+			const user = users.find((item) => item.login.toLowerCase() === formData.login.trim().toLowerCase() && item.senha === formData.senha);
 
 			if (!user) {
 				setError('Login ou senha inválidos.');
