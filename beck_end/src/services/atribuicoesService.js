@@ -10,7 +10,7 @@ async function listAtribuicoes() {
 			turma_id,
 			componente_id,
 			docente_id,
-			turmas(id, codigo, nome, turno, horario_inicio, horario_fim),
+			turmas(id, codigo, nome, turno, horario_inicio, horario_fim, cursos(id, nome, tipos_curso(id, nome))),
 			componentes_curriculares(id, nome, sigla),
 			docentes(id, nome, registro)
 		`)
@@ -21,9 +21,15 @@ async function listAtribuicoes() {
 	return (data || []).map((row) => ({
 		id: row.id,
 		turma: row.turmas?.nome || row.turmas?.codigo || '',
+		turmaId: row.turma_id,
+		turmaCodigo: row.turmas?.codigo || '',
 		materia: row.componentes_curriculares?.nome || '',
 		docente: row.docentes?.nome || '',
-		turmaCodigo: row.turmas?.codigo || '',
+		docenteId: row.docente_id,
+		curso: row.turmas?.cursos?.nome || '',
+		cursoId: row.turmas?.cursos?.id || '',
+		tipoCurso: row.turmas?.cursos?.tipos_curso?.nome || '',
+		tipoCursoId: row.turmas?.cursos?.tipos_curso?.id || '',
 		turno: row.turmas?.turno || '',
 		horarioInicio: row.turmas?.horario_inicio || '',
 		horarioFim: row.turmas?.horario_fim || ''

@@ -5,6 +5,7 @@ import './Relatorio.css';
 const reportOptions = [
 	{ value: 'ambientes', label: 'Relatório de ambientes', description: 'Consulte a utilização dos ambientes por aula, dia e horário.', path: '/relatorio-ambientes' },
 	{ value: 'turmas', label: 'Relatório de turmas', description: 'Visualize turmas cadastradas, cursos, turnos e matérias.', path: '/relatorio-turmas' },
+	{ value: 'atribuicoes', label: 'Relatório de atribuições', description: 'Filtre as aulas por professor, turma, ambiente, curso e tipo de curso.', path: '/relatorio-atribuicoes' },
 	{ value: 'banco-sugestoes', label: 'Relatório de manutenção', description: 'Consulte todas as sugestões de manutenção enviadas.', path: '/sugestao-manutencao/dashboard' },
 	{ value: 'alocacoes', label: 'Relatório de alocações', description: 'Confira a distribuição de ambientes por turma.', path: '/relatorio-alocacoes' },
 ];

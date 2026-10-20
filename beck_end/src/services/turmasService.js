@@ -5,7 +5,7 @@ async function listTurmas() {
 
 	const { data, error } = await supabase
 		.from('turmas')
-		.select('id, codigo, nome, turno, cursos(nome), turma_componentes_docentes(componentes_curriculares(nome))')
+		.select('id, codigo, nome, turno, cursos(id, nome, tipos_curso(id, nome)), turma_componentes_docentes(componentes_curriculares(nome))')
 		.order('id');
 
 	if (error) throw error;
@@ -15,6 +15,9 @@ async function listTurmas() {
 		codigo: row.codigo,
 		nome: row.nome || row.codigo,
 		curso: row.cursos?.nome || '',
+		cursoId: row.cursos?.id || '',
+		tipoCurso: row.cursos?.tipos_curso?.nome || '',
+		tipoCursoId: row.cursos?.tipos_curso?.id || '',
 		turno: row.turno,
 		materias: (row.turma_componentes_docentes || [])
 			.map((item) => item.componentes_curriculares?.nome)

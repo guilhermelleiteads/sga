@@ -8,6 +8,7 @@ function Sujestão_manutenção() {
 	const [loadingEnv, setLoadingEnv] = useState(true);
 	const [formData, setFormData] = useState({
 		nome: '',
+		ambienteId: '',
 		local: '',
 		sugestao: '',
 	});
@@ -32,9 +33,20 @@ function Sujestão_manutenção() {
 		loadEnvironments();
 	}, []);
 
+	function getEnvironmentLabel(environmentId) {
+		const selectedEnvironment = environments.find((environment) => String(environment.id) === String(environmentId));
+		return selectedEnvironment ? `${selectedEnvironment.codigo} · ${selectedEnvironment.nome}` : '';
+	}
+
 	function handleChange(event) {
 		const { name, value } = event.target;
-		setFormData((currentData) => ({ ...currentData, [name]: value }));
+		setFormData((currentData) => {
+			const nextData = { ...currentData, [name]: value };
+			if (name === 'ambienteId') {
+				nextData.local = getEnvironmentLabel(value);
+			}
+			return nextData;
+		});
 		setSubmitted(false);
 		setError('');
 	}
@@ -44,15 +56,22 @@ function Sujestão_manutenção() {
 		setSending(true);
 		setError('');
 		try {
+			const payload = {
+				nome: formData.nome,
+				ambienteId: formData.ambienteId,
+				local: getEnvironmentLabel(formData.ambienteId),
+				sugestao: formData.sugestao,
+			};
+
 			const response = await apiFetch('/api/sugestoes-manutencao', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(formData),
+				body: JSON.stringify(payload),
 			});
 			const result = await response.json();
 			if (!response.ok) throw new Error(result.erro || 'Não foi possível enviar a sugestão.');
 			setSubmitted(true);
-			setFormData({ nome: '', local: '', sugestao: '' });
+			setFormData({ nome: '', ambienteId: '', local: '', sugestao: '' });
 		} catch (submitError) {
 			setError(submitError.message);
 		} finally {
@@ -82,11 +101,11 @@ function Sujestão_manutenção() {
 						Nome
 						<input id="nome" name="nome" type="text" value={formData.nome} onChange={handleChange} required />
 					</label>
-					<label htmlFor="local">
+					<label htmlFor="ambienteId">
 						Local da sugestão
-						<select id="local" name="local" value={formData.local} onChange={handleChange} disabled={loadingEnv} required>
+						<select id="ambienteId" name="ambienteId" value={formData.ambienteId} onChange={handleChange} disabled={loadingEnv} required>
 							<option value="">{loadingEnv ? 'Carregando ambientes...' : 'Selecione um ambiente'}</option>
-							{environments.map((environment) => <option value={`${environment.codigo} · ${environment.nome}`} key={environment.id}>{environment.codigo} · {environment.nome}</option>)}
+							{environments.map((environment) => <option value={environment.id} key={environment.id}>{environment.codigo} · {environment.nome}</option>)}
 						</select>
 					</label>
 					<label htmlFor="sugestao">

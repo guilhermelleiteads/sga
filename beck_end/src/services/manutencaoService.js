@@ -21,32 +21,41 @@ async function listSugestoes() {
 	}));
 }
 
-async function createSugestao({ nome, local, sugestao }) {
+async function createSugestao({ nome, ambienteId, local, sugestao }) {
 	if (!supabase) throw new Error('Supabase não configurado.');
 
 	const cleanNome = String(nome || '').trim();
 	const cleanSugestao = String(sugestao || '').trim();
+	const rawAmbienteId = ambienteId ?? local;
 	const cleanLocal = String(local || '').trim();
+	const cleanAmbienteId = Number(rawAmbienteId);
 
 	if (!cleanNome || !cleanSugestao) {
 		throw new Error('Nome e sugestão são obrigatórios.');
 	}
 
-	let ambienteId = null;
-	if (cleanLocal) {
+	let resolvedAmbienteId = null;
+	if (Number.isSafeInteger(cleanAmbienteId) && cleanAmbienteId > 0) {
+		resolvedAmbienteId = cleanAmbienteId;
+	} else if (cleanLocal) {
+		const searchValue = cleanLocal.replace(/\s*·\s*/g, ' ').trim();
 		const { data: amb } = await supabase
 			.from('ambientes')
 			.select('id')
-			.or(`nome.ilike.%${cleanLocal}%,local.ilike.%${cleanLocal}%`)
+			.or(`nome.ilike.%${searchValue}%,local.ilike.%${searchValue}%,codigo.ilike.%${searchValue}%`)
 			.limit(1)
 			.maybeSingle();
-		if (amb) ambienteId = amb.id;
+		if (amb) resolvedAmbienteId = amb.id;
+	}
+
+	if (!resolvedAmbienteId) {
+		throw new Error('Selecione um ambiente válido para registrar a sugestão.');
 	}
 
 	const { data, error } = await supabase
 		.from('sugestoes_manutencao')
 		.insert({
-			ambiente_id: ambienteId,
+			ambiente_id: resolvedAmbienteId,
 			nome: cleanNome,
 			sujestao: cleanSugestao,
 			status: 'Pendente'

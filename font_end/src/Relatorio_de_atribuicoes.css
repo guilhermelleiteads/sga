@@ -1,0 +1,25 @@
+.assignment-report { --assignment-ink: #17312e; --assignment-muted: #687a75; --assignment-paper: #f2f5ef; --assignment-line: #d5dfd8; --assignment-green: #26715f; --assignment-yellow: #e5bd46; background: var(--assignment-paper); background-image: repeating-linear-gradient(135deg, rgba(38, 113, 95, .035) 0 1px, transparent 1px 13px); color: var(--assignment-ink); font-family: 'Trebuchet MS', 'Segoe UI', sans-serif; min-height: 100vh; padding-bottom: 72px; }
+.assignment-report-header { background: var(--assignment-ink); color: #fff; padding: 38px clamp(24px, 8vw, 120px); }
+.assignment-report-header h1 { font-size: clamp(30px, 5vw, 52px); margin: 10px 0 8px; }
+.assignment-report-header p:last-child { color: #c4d4cf; margin: 0; }
+.assignment-report-kicker { color: #83b5a3; font-size: 10px; font-weight: 700; letter-spacing: 2px; margin: 0; }
+.assignment-report-content { margin: 54px auto 0; max-width: 1320px; padding: 0 24px; }
+.assignment-report-heading { align-items: flex-end; border-bottom: 2px solid var(--assignment-ink); display: flex; justify-content: space-between; padding-bottom: 18px; }
+.assignment-report-heading h2 { font-size: clamp(25px, 4vw, 38px); margin: 9px 0 0; }
+.assignment-report-count { color: var(--assignment-muted); font-size: 13px; margin: 0 0 4px; }
+.assignment-report-count strong { color: var(--assignment-green); font-size: 22px; }
+.assignment-report-filters { align-items: end; background: #fff; border-bottom: 1px solid var(--assignment-line); display: grid; gap: 16px; grid-template-columns: repeat(5, minmax(130px, 1fr)) auto; margin-top: 24px; padding: 20px; }
+.assignment-report-filters label { color: var(--assignment-ink); display: grid; font-size: 12px; font-weight: 700; gap: 8px; }
+.assignment-report-filters select { background: #fbfcfa; border: 1px solid var(--assignment-line); border-radius: 2px; color: var(--assignment-ink); font: inherit; font-size: 13px; min-width: 0; padding: 11px 10px; }
+.assignment-report-filters select:focus { border-color: var(--assignment-green); outline: 2px solid rgba(38, 113, 95, .13); }
+.assignment-report-clear { background: transparent; border: 1px solid var(--assignment-green); color: var(--assignment-green); cursor: pointer; font: inherit; font-size: 12px; font-weight: 700; padding: 11px 12px; white-space: nowrap; }
+.assignment-report-clear:hover { background: var(--assignment-green); color: #fff; }
+.assignment-report-table-wrap { overflow-x: auto; }
+.assignment-report-table { background: #fff; border-collapse: collapse; margin-top: 22px; min-width: 960px; width: 100%; }
+.assignment-report-table th { background: #e4ede7; color: var(--assignment-muted); font-size: 10px; text-align: left; text-transform: uppercase; }
+.assignment-report-table th, .assignment-report-table td { border-bottom: 1px solid var(--assignment-line); padding: 14px 13px; }
+.assignment-report-table td { font-size: 13px; line-height: 1.4; }
+.assignment-report-message { color: var(--assignment-muted); padding: 32px 0; }
+.assignment-report-error { color: #a44343; }
+@media (max-width: 1050px) { .assignment-report-filters { grid-template-columns: repeat(3, minmax(130px, 1fr)); } }
+@media (max-width: 620px) { .assignment-report-header { padding: 30px 20px; } .assignment-report-content { margin-top: 38px; padding: 0 16px; } .assignment-report-heading { align-items: flex-start; flex-direction: column; gap: 12px; } .assignment-report-filters { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 16px; } .assignment-report-clear { align-self: end; } }

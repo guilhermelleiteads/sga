@@ -14,6 +14,7 @@ import AlocacaoDeAmbiente from './Alocação_de_ambiente';
 import RelatorioDeAlocacoes from './Relatorio_de_alocacoes';
 import RelatorioDeAmbientes from './Relatorio_de_ambientes';
 import RelatorioDeTurmas from './Relatorio_de_turmas';
+import RelatorioDeAtribuicoes from './Relatorio_de_atribuicoes';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path="/relatorio-alocacoes" element={<RelatorioDeAlocacoes />} />
         <Route path="/relatorio-ambientes" element={<RelatorioDeAmbientes />} />
         <Route path="/relatorio-turmas" element={<RelatorioDeTurmas />} />
+        <Route path="/relatorio-atribuicoes" element={<RelatorioDeAtribuicoes />} />
       </Routes>
     </Router>
   );
