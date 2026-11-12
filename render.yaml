@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: sga-backend
+    runtime: node
+    rootDir: APP/beck_end
+    buildCommand: npm ci --include=dev
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+
+  - type: worker
+    name: sga-telemetry-worker
+    runtime: node
+    rootDir: APP/beck_end
+    buildCommand: npm ci --include=dev
+    startCommand: npm run node-red
+    envVars:
+      - key: SGA_API_URL
+        fromService:
+          type: web
+          name: sga-backend
+          property: hostport
