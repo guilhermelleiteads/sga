@@ -126,7 +126,7 @@
     "name": "Resposta do backend",
     "active": true,
     "tosidebar": true,
-    "console": false,
+    "console": true,
     "tostatus": true,
     "complete": "statusCode",
     "targetType": "msg",
