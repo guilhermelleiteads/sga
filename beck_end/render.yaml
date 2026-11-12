@@ -2,7 +2,7 @@ services:
   - type: web
     name: sga-backend
     runtime: node
-    rootDir: APP/beck_end
+    rootDir: beck_end
     buildCommand: npm ci --include=dev
     startCommand: npm start
     healthCheckPath: /api/health
@@ -15,7 +15,7 @@ services:
   - type: worker
     name: sga-telemetry-worker
     runtime: node
-    rootDir: APP/beck_end
+    rootDir: beck_end
     buildCommand: npm ci --include=dev
     startCommand: npm run node-red
     envVars:
