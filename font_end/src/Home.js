@@ -16,6 +16,14 @@ function isCurrentSchedule(schedule, now) {
 	return currentMinutes >= startHour * 60 + startMinute && currentMinutes < endHour * 60 + endMinute;
 }
 
+function isCurrentWeekday(daySchedule, now) {
+	const schedule = normalizeText(daySchedule);
+	const weekday = now.getDay();
+	if (schedule.includes('segunda a sexta')) return weekday >= 1 && weekday <= 5;
+	const weekdayNames = ['domingo', 'segunda-feira', 'terca-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sabado'];
+	return schedule.includes(weekdayNames[weekday]);
+}
+
 async function readApiResponse(response) {
 	const responseText = await response.text();
 	if (!responseText.trim()) {
@@ -59,7 +67,7 @@ function Home() {
 
 	const currentUsages = useMemo(() => {
 		const environmentById = new Map(environments.map((environment) => [String(environment.id), environment]));
-		return usages.map((usage) => ({
+		return usages.filter((usage) => isCurrentSchedule(usage.horario, now) && isCurrentWeekday(usage.diaSemana, now)).map((usage) => ({
 			...usage,
 			environment: environmentById.get(String(usage.ambienteId)) || {
 				codigo: usage.ambienteCodigo || `AMB-${usage.ambienteId}`,

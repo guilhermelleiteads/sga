@@ -58,7 +58,8 @@ async function createSugestao({ nome, ambienteId, local, sugestao }) {
 			ambiente_id: resolvedAmbienteId,
 			nome: cleanNome,
 			sujestao: cleanSugestao,
-			status: 'Pendente'
+			status: 'Pendente',
+			criadoem: new Date().toISOString()
 		})
 		.select('id, ambiente_id, nome, sujestao, status, criadoem')
 		.single();

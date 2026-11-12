@@ -2,10 +2,7 @@ import { useEffect, useState } from 'react';
 import { apiFetch } from './api';
 import './Direcionamento_de_manutenção.css';
 import BotaoVoltar from './Botao_voltar';
-
-function formatDate(value) {
-	return new Intl.DateTimeFormat('pt-BR', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value));
-}
+import { formatDateTime } from './dateFormat';
 
 function Direcionamento_de_manutenção() {
 	const [suggestions, setSuggestions] = useState([]);
@@ -97,7 +94,7 @@ function Direcionamento_de_manutenção() {
 									<article className="routing-card" key={suggestion.id}>
 										<div className="routing-card-meta">
 											<span className="routing-id">#{suggestion.id}</span>
-											<time dateTime={suggestion.criadoEm}>{formatDate(suggestion.criadoEm)}</time>
+											<time dateTime={suggestion.criadoEm || undefined}>{formatDateTime(suggestion.criadoEm)}</time>
 										</div>
 										<h4>{suggestion.sugestao}</h4>
 										<p><strong>Solicitante</strong>{suggestion.nome}</p>

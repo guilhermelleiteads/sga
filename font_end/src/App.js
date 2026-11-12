@@ -15,7 +15,7 @@ import RelatorioDeAlocacoes from './Relatorio_de_alocacoes';
 import RelatorioDeAmbientes from './Relatorio_de_ambientes';
 import RelatorioDeTurmas from './Relatorio_de_turmas';
 import RelatorioDeAtribuicoes from './Relatorio_de_atribuicoes';
-import CriarUsuario from './Criar_usuario';
+import RelatorioDeTelemetria from './Relatorio_de_telemetria';
 
 function App() {
   return (
@@ -37,7 +37,7 @@ function App() {
         <Route path="/relatorio-ambientes" element={<RelatorioDeAmbientes />} />
         <Route path="/relatorio-turmas" element={<RelatorioDeTurmas />} />
         <Route path="/relatorio-atribuicoes" element={<RelatorioDeAtribuicoes />} />
-        <Route path="/criar-usuario" element={<CriarUsuario />} />
+        <Route path="/relatorio-telemetria" element={<RelatorioDeTelemetria />} />
       </Routes>
     </Router>
   );

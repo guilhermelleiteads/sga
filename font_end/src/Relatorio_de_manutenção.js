@@ -2,10 +2,7 @@ import { useEffect, useState } from 'react';
 import { apiFetch } from './api';
 import './Relatorio_de_manutenção.css';
 import BotaoVoltar from './Botao_voltar';
-
-function formatDate(value) {
-	return new Intl.DateTimeFormat('pt-BR', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value));
-}
+import { formatDateTime } from './dateFormat';
 
 function RelatorioDeManutencao() {
 	const [suggestions, setSuggestions] = useState([]);
@@ -56,7 +53,7 @@ function RelatorioDeManutencao() {
 					<article className="suggestion-row" key={suggestion.id}>
 						<div className="suggestion-meta">
 							<span className={`suggestion-status status-${suggestion.status.toLowerCase().replace(' ', '-')}`}>{suggestion.status}</span>
-							<time dateTime={suggestion.criadoEm}>{formatDate(suggestion.criadoEm)}</time>
+							<time dateTime={suggestion.criadoEm || undefined}>{formatDateTime(suggestion.criadoEm)}</time>
 						</div>
 						<div className="suggestion-content">
 							<h3>{suggestion.sugestao}</h3>

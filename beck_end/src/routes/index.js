@@ -8,6 +8,8 @@ const ambientesRoutes = require('./ambientesRoutes');
 const atribuicoesRoutes = require('./atribuicoesRoutes');
 const alocacoesRoutes = require('./alocacoesRoutes');
 const manutencaoRoutes = require('./manutencaoRoutes');
+const machinesRoutes = require('./machinesRoutes');
+const telemetryRoutes = require('./telemetryRoutes');
 
 // Healthcheck
 router.get('/health', (req, res) => {
@@ -35,5 +37,7 @@ router.use('/ambientes', ambientesRoutes);
 router.use('/atribuicoes', atribuicoesRoutes);
 router.use('/alocacoes-ambiente', alocacoesRoutes);
 router.use('/sugestoes-manutencao', manutencaoRoutes);
+router.use('/machines', machinesRoutes);
+router.use('/telemetry', telemetryRoutes);
 
 module.exports = router;

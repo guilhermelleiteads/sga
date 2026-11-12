@@ -8,6 +8,7 @@ const reportOptions = [
 	{ value: 'atribuicoes', label: 'Relatório de atribuições', description: 'Filtre as aulas por professor, turma, ambiente, curso e tipo de curso.', path: '/relatorio-atribuicoes' },
 	{ value: 'banco-sugestoes', label: 'Relatório de manutenção', description: 'Consulte todas as sugestões de manutenção enviadas.', path: '/sugestao-manutencao/dashboard' },
 	{ value: 'alocacoes', label: 'Relatório de alocações', description: 'Confira a distribuição de ambientes por turma.', path: '/relatorio-alocacoes' },
+	{ value: 'telemetria', label: 'Relatório de telemetria', description: 'Acompanhe o status e os indicadores das máquinas em tempo real.', path: '/relatorio-telemetria' },
 ];
 
 const profileActions = [
@@ -18,7 +19,6 @@ const profileActions = [
 		{ label: 'Alocação de ambiente', path: '/Alocação_de_ambiente' },
 		{ label: 'Atribuição de aula', path: '/Atribuição_de_turma' },
 		{ label: 'Cadastro de turma/docente', path: '/Cadastro_de_turma_doscente' },
-			{ label: 'Criar usuário', path: '/criar-usuario' },
 	] },
 	{ profile: 'Secretaria', actions: [
 		{ label: 'Cadastro de turma/docente', path: '/Cadastro_de_turma_doscente' },
@@ -61,7 +61,7 @@ function Relatorio() {
 						<div className="profile-group" key={profile.profile}>
 							<div className="action-list">
 								{profile.actions.map((action) => (
-									<button type="button" key={action.path} onClick={() => navigate(action.path, { state: { perfil, login: location.state?.login } })}>{action.label} <span aria-hidden="true">↗</span></button>
+									<button type="button" key={action.path} onClick={() => navigate(action.path)}>{action.label} <span aria-hidden="true">↗</span></button>
 								))}
 							</div>
 						</div>

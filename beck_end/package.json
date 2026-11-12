@@ -10,9 +10,11 @@
   },
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "node-red": "node-red --userDir ./node-red"
   },
   "devDependencies": {
+    "node-red": "^5.0.9",
     "nodemon": "^3.1.14"
   }
 }

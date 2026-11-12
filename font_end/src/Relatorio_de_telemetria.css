@@ -1,0 +1,37 @@
+.telemetry-report { --ink: #102a43; --muted: #6d7f91; --paper: #f4f6f2; --blue: #176b87; background: var(--paper); color: var(--ink); font-family: 'Trebuchet MS', 'Segoe UI', sans-serif; min-height: 100vh; padding-bottom: 60px; }
+.telemetry-header { align-items: center; background: var(--ink); color: white; display: flex; justify-content: space-between; padding: 36px clamp(24px, 8vw, 120px); }
+.telemetry-header h1 { font-size: 40px; margin: 10px 0 8px; }
+.telemetry-header p:last-child { color: #b9c9d0; margin: 0; }
+.telemetry-kicker { color: #7aa8b7; font-size: 10px; font-weight: 700; letter-spacing: 2px; margin: 0; }
+.telemetry-live { align-items: center; color: #d4e4e6; display: flex; font-size: 12px; gap: 9px; white-space: nowrap; }
+.telemetry-live i { background: #49a77e; border-radius: 50%; height: 8px; width: 8px; }
+.telemetry-content { margin: 56px auto 0; max-width: 1240px; padding: 0 24px; }
+.telemetry-title-row { align-items: flex-end; border-bottom: 2px solid var(--ink); display: flex; justify-content: space-between; padding-bottom: 18px; }
+.telemetry-title-row h2 { font-size: 32px; margin: 10px 0 0; }
+.telemetry-title-row > p { color: var(--muted); font-size: 12px; margin: 0; }
+.telemetry-title-row > p strong { color: var(--ink); }
+.telemetry-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); margin-top: 24px; }
+.telemetry-machine { background: white; border: 1px solid #dfe6e2; border-left: 5px solid #8997a2; display: flex; flex-direction: column; min-width: 0; }
+.telemetry-machine.is-running { border-left-color: var(--blue); }
+.telemetry-machine-heading { align-items: flex-start; display: flex; gap: 12px; justify-content: space-between; padding: 18px; }
+.telemetry-machine-heading h3 { font-size: 17px; line-height: 1.25; margin: 0; overflow-wrap: anywhere; }
+.telemetry-machine-heading span { color: var(--muted); display: block; font-size: 10px; font-weight: 700; margin-top: 6px; text-transform: uppercase; }
+.telemetry-machine-heading > strong { background: #edf0f2; color: #657784; flex: 0 0 auto; font-size: 10px; max-width: 120px; overflow-wrap: anywhere; padding: 6px 8px; text-align: center; text-transform: uppercase; }
+.telemetry-machine-heading > .telemetry-status-running { background: #e5f1f1; color: var(--blue); }
+.telemetry-facts { border-bottom: 1px solid #e8edea; border-top: 1px solid #e8edea; display: grid; gap: 14px; grid-template-columns: 1fr 1fr; padding: 13px 18px; }
+.telemetry-facts p, .telemetry-metrics p { display: flex; flex-direction: column; gap: 5px; margin: 0; min-width: 0; }
+.telemetry-facts span, .telemetry-oee span, .telemetry-metrics span { color: var(--muted); font-size: 11px; }
+.telemetry-facts strong { font-size: 12px; overflow-wrap: anywhere; }
+.telemetry-oee { padding: 14px 18px 16px; }
+.telemetry-oee > div:first-child { display: flex; justify-content: space-between; }
+.telemetry-oee > div:first-child strong { font-size: 12px; }
+.telemetry-progress { background: #e8eeea; height: 7px; margin-top: 9px; overflow: hidden; }
+.telemetry-progress span { background: var(--blue); display: block; height: 100%; transition: width .25s ease; }
+.telemetry-metrics { background: var(--paper); border: 1px solid #e6ebe7; margin: 0 18px 16px; padding: 12px; }
+.telemetry-metrics h4 { color: var(--muted); font-size: 10px; margin: 0 0 10px; text-transform: uppercase; }
+.telemetry-metrics > div { display: grid; gap: 10px; grid-template-columns: 1fr 1fr; }
+.telemetry-metrics p strong { font-size: 13px; overflow-wrap: anywhere; }
+.telemetry-machine footer { border-top: 1px solid #e8edea; color: var(--muted); font-size: 10px; margin-top: auto; padding: 12px 18px; }
+.telemetry-message { color: var(--muted); padding: 28px 0; }
+.telemetry-error { color: #a44343; }
+@media (max-width: 640px) { .telemetry-header { align-items: flex-start; flex-direction: column; gap: 20px; padding: 28px 20px; } .telemetry-header h1 { font-size: 32px; } .telemetry-content { margin-top: 40px; padding: 0 20px; } .telemetry-title-row { align-items: flex-start; flex-direction: column; gap: 14px; } .telemetry-title-row h2 { font-size: 26px; } }

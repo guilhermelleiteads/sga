@@ -9,10 +9,13 @@ async function listAlocacoes() {
 			id,
 			atribuicao_aula_id,
 			ambiente_id,
+			periodo,
+			horario_inicio,
+			horario_fim,
 			ambientes(id, nome, tipo),
 			turma_componentes_docentes(
 				id,
-				turmas(codigo, nome, horario_inicio, horario_fim, turno),
+				turmas(codigo, nome, turno),
 				componentes_curriculares(nome),
 				docentes(nome)
 			)
@@ -28,9 +31,9 @@ async function listAlocacoes() {
 		const materiaNome = tcd?.componentes_curriculares?.nome || '';
 		const docenteNome = tcd?.docentes?.nome || '';
 
-		const horario = [turma?.horario_inicio, turma?.horario_fim]
-			.filter(Boolean)
-			.join(' - ') || turma?.turno || 'Horário da turma';
+		const horario = row.horario_inicio && row.horario_fim
+			? `${String(row.horario_inicio).slice(0, 5)} - ${String(row.horario_fim).slice(0, 5)}`
+			: '';
 
 		return {
 			id: row.id,
@@ -41,7 +44,7 @@ async function listAlocacoes() {
 			aulaDescricao: [turmaNome, materiaNome, docenteNome].filter(Boolean).join(' · '),
 			diaSemana: 'Segunda a Sexta',
 			horario,
-			periodo: turma?.turno || 'Semestral'
+			periodo: row.periodo || turma?.turno || 'Semestral'
 		};
 	});
 }
