@@ -2,15 +2,15 @@
 
 ## Visao geral
 
-O fluxo atual gera **dados simulados** com o Node-RED. Ele nao le diretamente os controladores ou sensores das maquinas. Os valores de status, OEE, programa, contagem de pecas e metricas variam artificialmente para demonstracao.
+O backend separado em `back_end_telemetria` executa uma API Node.js e o Node-RED no mesmo servico. O flow gera **dados simulados**; ele nao le diretamente os controladores ou sensores das maquinas.
 
 Em producao, o fluxo esperado e:
 
-1. O worker Node-RED executa o fluxo `beck_end/node-red/flows.json` continuamente.
-2. A cada 5 segundos, consulta `GET /api/machines` no backend.
-3. Para cada maquina retornada, gera uma amostra sintetica e envia `POST /api/telemetry`.
-4. O backend identifica a maquina e grava a amostra na tabela `telemetry_logs` do Supabase.
-5. O painel da Vercel consulta `GET /api/machines` a cada 5 segundos. O backend retorna cada maquina junto com seu registro de telemetria mais recente.
+1. O servico web separado `sga-telemetria` inicia `back_end_telemetria/server.js` no Render.
+2. O servidor inicia o Node-RED usando `back_end_telemetria/node-red/flows.json`.
+3. A cada 5 segundos, o flow consulta `GET /api/machines`, gera uma amostra por maquina e envia `POST /api/telemetry` para a API na mesma aplicacao.
+4. A API grava as amostras na tabela `telemetry_logs` do Supabase.
+5. O painel da Vercel consulta `/api/machines` no backend principal para exibir as leituras mais recentes.
 
 ## Componentes
 
@@ -26,13 +26,15 @@ As rotas envolvidas sao:
 
 O backend precisa das variaveis `SUPABASE_URL` e `SUPABASE_SERVICE_ROLE_KEY` configuradas no ambiente do servico Render. A chave de service role deve ficar somente no backend, nunca no frontend.
 
-### Worker Node-RED
+### Backend de telemetria no Render
 
-O servico `sga-telemetry-worker`, tambem definido em `beck_end/render.yaml`, inicia com `npm run node-red`. O intervalo do fluxo e de 5 segundos, com primeira execucao logo apos a inicializacao.
+O servico web `sga-telemetria`, definido no Blueprint `beck_end/render.yaml`, usa a pasta `back_end_telemetria` como raiz, executa `npm ci` e inicia com `npm start`. O `server.js` sobe a API local e inicia o runtime Node-RED como processo filho. O editor Node-RED fica limitado a localhost; as requisicoes do flow passam pela API na porta do servico.
 
-O fluxo usa `SGA_API_URL` como endereco-base do backend. No Render, essa variavel e vinculada ao servico web `sga-backend`. Localmente, se ela nao estiver definida, o fluxo usa `http://127.0.0.1:3001`.
+Configure `SUPABASE_URL` e `SUPABASE_SERVICE_ROLE_KEY` nas variaveis de ambiente privadas do servico `sga-telemetria`. A chave service role deve ficar somente no backend, nunca no frontend. O flow esta configurado para executar a cada cinco segundos.
 
-O Node-RED primeiro busca as maquinas cadastradas. Se nao houver maquinas, nao ha amostras para enviar. Para cada maquina, cria um payload com `machine_id`, status, timestamp e metricas, e o envia para `/api/telemetry`. As respostas dos POSTs aparecem no no de debug `Resposta do backend`.
+O endpoint `/health` e o health check do servico. Os logs do Render incluem a inicializacao do Node-RED e mensagens de resposta aos POSTs. Sem maquinas cadastradas, nenhum registro e gravado.
+
+O servico e do tipo web, nao worker. Em planos gratuitos do Render, servicos web podem entrar em suspensao quando ficam sem trafego, interrompendo os ciclos ate o servico acordar novamente. Para coleta realmente continua, use um plano que mantenha o servico ativo.
 
 ### Frontend na Vercel
 
@@ -42,28 +44,25 @@ Depois de alterar esse arquivo, a Vercel precisa concluir um novo deploy para qu
 
 ## Como rodar localmente
 
-Abra dois terminais, ambos na pasta `beck_end`:
+Para rodar a API e o Node-RED localmente, entre em `back_end_telemetria`, crie um `.env` com as credenciais do Supabase e execute:
 
 ```sh
+npm ci
 npm start
 ```
 
-```sh
-npm run node-red
-```
-
-O backend local usa a porta 3001 por padrao, e o Node-RED consulta `http://127.0.0.1:3001`. O Supabase precisa estar configurado no `.env` do backend, e a tabela `machines` deve conter maquinas.
+O comando inicia os dois processos. O flow grava amostras no Supabase a cada cinco segundos enquanto estiver ativo; a tabela `machines` precisa conter maquinas.
 
 ## Diagnostico em producao
 
 1. Abra `https://<dominio-do-backend>/api/health`. A resposta esperada e um JSON com `ok: true` e `storage: "supabase"`.
 2. Abra `https://<dominio-do-backend>/api/machines`. Deve retornar um array JSON. Um array vazio significa que nao ha maquinas cadastradas; um erro indica problema de API ou de acesso ao Supabase.
 3. No Render, confira os logs de inicializacao do servico web e procure `Servidor SGA Express ativo`.
-4. Nos logs do worker, procure falhas nas requisicoes GET e POST. Resposta `201` no POST confirma que uma amostra foi gravada; `404` pode indicar maquina nao encontrada ou rota/servico incorreto; `500` aponta falha no backend ou no banco.
+4. Nos logs de `sga-telemetria`, confira a inicializacao do Node-RED e os status HTTP dos POSTs. `201` indica gravacao aceita; `404` ou `500` aponta erro na API ou no Supabase.
 5. Na Vercel, confirme que o ultimo deploy inclui a regra `/api/:path*` do `font_end/vercel.json` e que ela aparece antes do fallback `/(.*)`.
 
-Na verificacao feita durante a documentacao, o endereco `https://sga-backend.onrender.com/api/health` retornou `404 Cannot GET /api/health`, e `/api/machines` tambem retornou 404. Esse resultado nao corresponde ao backend deste repositorio, que define ambas as rotas. Confirme no painel do Render se o dominio pertence ao servico `sga-backend`, se o servico usa a raiz correta do repositorio e se o deploy ativo contem o backend atual. O nome de dominio pode ser diferente do exemplo configurado; use o dominio mostrado no painel do servico e ajuste o destino do rewrite da Vercel e o endereco do worker caso necessario.
+Na verificacao feita anteriormente, `https://sga-backend.onrender.com/api/health` e `/api/machines` retornaram 404. Isso nao impede `sga-telemetria` de gravar diretamente no Supabase, mas impede o painel de ler os dados pelo backend principal. Confirme no Render se o dominio pertence ao servico `sga-backend` e se o deploy ativo contem as rotas deste repositorio. O destino do rewrite da Vercel deve usar o dominio real desse servico.
 
 ## Telemetria real
 
-Para receber leituras reais, e necessario substituir a parte de geracao aleatoria em `beck_end/node-red/flows.json` por uma integracao com os equipamentos ou com o sistema que coleta seus dados. O formato enviado pode continuar usando os campos aceitos pela rota `POST /api/telemetry`, mas os valores precisam vir da fonte real. Enquanto esse fluxo nao for integrado, os dados exibidos sao apenas simulacoes.
+Para receber leituras reais, substitua a funcao `Gerar metricas simuladas` em `back_end_telemetria/node-red/flows.json` por uma integracao com os equipamentos ou com o sistema que coleta seus dados. Enquanto isso nao for feito, os dados gravados e exibidos sao simulacoes.

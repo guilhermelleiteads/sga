@@ -15,6 +15,8 @@ coverage/
 .env.*
 **/.env
 **/.env.*
+back_end_telemetria/node-red/.config.*
+back_end_telemetria/node-red/flows_cred.json
 
 # Sistema
 .DS_Store
